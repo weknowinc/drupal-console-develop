@@ -5,7 +5,7 @@ services:
      - { name: drupal.command }
     lazy: true
   console.develop_example_container_aware_command:
-    class: \Drupal\Console\Develop\ExampleContainerAwareCommand
+    class: \Drupal\Console\Develop\Command\ExampleContainerAwareCommand
     tags:
       - { name: drupal.command }
     lazy: true
