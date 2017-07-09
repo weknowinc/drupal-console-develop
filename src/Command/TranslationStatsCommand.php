@@ -21,6 +21,16 @@ use Drupal\Console\Core\Command\Shared\CommandTrait;
 use Drupal\Console\Core\Utils\ConfigurationManager;
 use Drupal\Console\Core\Utils\TwigRenderer;
 use Drupal\Console\Core\Utils\NestedArray;
+use Drupal\Console\Annotations\DrupalCommand;
+
+/**
+ * Class TranslationStatsCommand.
+ *
+ * @DrupalCommand (
+ *     extension="drupal/console-develop",
+ *     extensionType="library"
+ * )
+ */
 
 class TranslationStatsCommand extends Command
 {
@@ -89,7 +99,8 @@ class TranslationStatsCommand extends Command
                 InputOption::VALUE_OPTIONAL,
                 $this->trans('commands.translation.stats.options.format'),
                 'table'
-            );
+            )
+            ->setAliases(['ts']);
     }
 
     /**

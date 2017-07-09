@@ -16,6 +16,16 @@ use Symfony\Component\Console\Command\Command;
 use Drupal\Console\Core\Style\DrupalStyle;
 use Knp\Snappy\Pdf;
 use Drupal\Console\Core\Command\Shared\CommandTrait;
+use Drupal\Console\Annotations\DrupalCommand;
+
+/**
+ * Class GenerateDocCheatsheetCommand.
+ *
+ * @DrupalCommand (
+ *     extension="drupal/console-develop",
+ *     extensionType="library"
+ * )
+ */
 
 class GenerateDocCheatsheetCommand extends Command
 {

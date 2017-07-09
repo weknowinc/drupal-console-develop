@@ -17,6 +17,16 @@ use Symfony\Component\Console\Command\Command;
 use Drupal\Console\Core\Style\DrupalStyle;
 use Drupal\Console\Core\Command\Shared\CommandTrait;
 use Drupal\Console\Core\Utils\ConfigurationManager;
+use Drupal\Console\Annotations\DrupalCommand;
+
+/**
+ * Class TranslationCleanupCommand.
+ *
+ * @DrupalCommand (
+ *     extension="drupal/console-develop",
+ *     extensionType="library"
+ * )
+ */
 
 class TranslationCleanupCommand extends Command
 {
@@ -61,7 +71,8 @@ class TranslationCleanupCommand extends Command
                 InputArgument::OPTIONAL,
                 $this->trans('commands.translation.cleanup.arguments.language'),
                 null
-            );
+            )
+            ->setAliases(['tc']);
     }
 
     /**

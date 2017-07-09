@@ -13,6 +13,16 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Command\Command;
 use Drupal\Console\Core\Style\DrupalStyle;
 use Drupal\Console\Core\Command\Shared\CommandTrait;
+use Drupal\Console\Annotations\DrupalCommand;
+
+/**
+ * Class GenerateDocDataCommand.
+ *
+ * @DrupalCommand (
+ *     extension="drupal/console-develop",
+ *     extensionType="library"
+ * )
+ */
 
 class GenerateDocDataCommand extends Command
 {
@@ -34,7 +44,8 @@ class GenerateDocDataCommand extends Command
                 null,
                 InputOption::VALUE_OPTIONAL,
                 $this->trans('commands.generate.doc.data.options.file')
-            );
+            )
+            ->setAliases(['gdda']);
         ;
     }
 

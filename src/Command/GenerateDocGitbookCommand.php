@@ -14,6 +14,16 @@ use Symfony\Component\Console\Command\Command;
 use Drupal\Console\Core\Style\DrupalStyle;
 use Drupal\Console\Core\Command\Shared\CommandTrait;
 use Drupal\Console\Core\Utils\TwigRenderer;
+use Drupal\Console\Annotations\DrupalCommand;
+
+/**
+ * Class GenerateDocGitbookCommand.
+ *
+ * @DrupalCommand (
+ *     extension="drupal/console-develop",
+ *     extensionType="library"
+ * )
+ */
 
 class GenerateDocGitbookCommand extends Command
 {

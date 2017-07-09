@@ -18,6 +18,16 @@ use Symfony\Component\Console\Command\Command;
 use Drupal\Console\Core\Style\DrupalStyle;
 use Drupal\Console\Core\Command\Shared\CommandTrait;
 use Drupal\Console\Core\Utils\ConfigurationManager;
+use Drupal\Console\Annotations\DrupalCommand;
+
+/**
+ * Class TranslationSyncCommand.
+ *
+ * @DrupalCommand (
+ *     extension="drupal/console-develop",
+ *     extensionType="library"
+ * )
+ */
 
 class TranslationSyncCommand extends Command
 {
@@ -68,7 +78,8 @@ class TranslationSyncCommand extends Command
                 InputOption::VALUE_OPTIONAL,
                 $this->trans('commands.translation.stats.options.file'),
                 null
-            );
+            )
+            ->setAliases(['tsy']);
     }
 
     /**
@@ -167,6 +178,12 @@ class TranslationSyncCommand extends Command
                 }
 
                 $resourceTranslatedParsed = array_replace_recursive($englishFileParsed, $resourceTranslatedParsed);
+
+                $resourceTranslatedParsed = array_replace_recursive($englishFileParsed,
+                    array_intersect_key(
+                        $resourceTranslatedParsed, $englishFileParsed
+                    )
+                );
 
                 try {
                     $resourceTranslatedParsedYaml = $dumper->dump($resourceTranslatedParsed, 10);
