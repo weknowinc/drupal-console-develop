@@ -1,0 +1,18 @@
+description: 'Hasilkan contekan untuk perintah yang dapat dicetak'
+options:
+    path: 'Path yang akan digunakan untuk menghasilkan pdf untuk dokumentasi'
+    wkhtmltopdf: 'Path dari biner wkhtmltopdf pada sistem anda'
+messages:
+    missing_path: 'Path tidak ditemukan'
+    title: 'Contekan Drupal Console'
+    note: Catatan
+    note-description: 'Perintah perintah Drupal Console *harus* dijalankan dari Akar Instalasi Drupal 8'
+    command: 'Perintah Drupal Console'
+    command_description: 'Perintah **"%s"** "%s"'
+    usage: Penggunaan
+    options: 'Opsi-opsi yang tersedia'
+    option: Opsi
+    details: 'Detail-detail'
+    arguments: 'Argumen-argumen yang tersedia'
+    argument: Argumen
+    examples: 'Contoh-contoh'

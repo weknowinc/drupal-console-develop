@@ -1,0 +1,10 @@
+description: 'Synchronise les fichiers de traduction'
+arguments:
+    language: 'Langue pour laquelle synchroniser les fichiers à partir de l''anglais'
+options:
+    file: 'Fichier de langue à synchroniser'
+messages:
+    created-file: 'Le fichier Yaml "%s" a été créé pour la langue "%s"'
+    error-generating: 'Erreur dans la synchronisation du fichier "%s" pour "%s": "%s"'
+    error-writing: 'Erreur dans l''écriture du fichier "%s" pour "%s": "%s"'
+    sync-finished: 'La synchronisation des fichiers de traduction est terminée'

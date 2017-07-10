@@ -1,0 +1,12 @@
+description: 'Détermine les chaînes de caractère en attente de traduction dans une langue ou un fichier spécifique de langue'
+arguments:
+    language: 'Langue pour laquelle déterminer les traductions en attente à partir de l''anglais'
+options:
+    file: 'Fichier spécifique pour lequel déterminer les traductions en attente à partir de l''anglais'
+messages:
+    invalid-language: 'La langue "%s" est invalide'
+    language: Langue
+    pending-translations: 'Traduction en attente de "%s" dans le fichier "%s"'
+    missing-file: 'La langue "%s" n''a pas le fichier "%s", essayez d'exécuter la commande translation:sync'
+    success-language: 'Il y a "%s" traductions en attente pour "%s"'
+    success-language-file: 'Il y a "%s" traductions en attente pour "%s" dans le fichier "%s"'

@@ -1,0 +1,17 @@
+description: 'Hasilkan dokumentasi untuk perinta perintah'
+options:
+    path: 'Path untuk membuat dokumentasi'
+messages:
+    missing_path: 'Path tidak ditemukan'
+    title: 'Perintah-Perintah Drupal Console yang Tersedia'
+    note: Catatan
+    note-description: 'Perintah perintah Drupal Console *harus* dijalankan dari akar instalasi Drupal 8'
+    command: 'Perintah Drupal Console'
+    command_description: 'Perintah **"%s"** "%s"'
+    usage: Penggunaan
+    options: 'Opsi yang tersedia'
+    option: Opsi
+    details: 'Detail-detail'
+    arguments: 'Argumen-argumen yang tersedia'
+    argument: Argumen
+    examples: 'Contoh-contoh'

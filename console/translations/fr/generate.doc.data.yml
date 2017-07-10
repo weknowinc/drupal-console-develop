@@ -1,0 +1,5 @@
+description: 'Génère des documentations de Commandes.'
+options:
+    file: 'Le fichier où générer le code de la commande'
+messages:
+    missing_file: 'Le fichier est manquant, utilisez l''option --file.'

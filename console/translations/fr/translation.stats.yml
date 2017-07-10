@@ -1,0 +1,13 @@
+description: 'Génère des statistiques de traduction'
+arguments:
+    language: 'Langue pour laquelle générer des statistiques de traduction à partir de l''anglais'
+options:
+    format: 'Définit le format de sortie table|markdown'
+messages:
+    invalid-language: 'La langue "%s" est invalide'
+    language: Langue
+    percentage: Pourcentage
+    iso: 'Code ISO'
+tips:
+    -
+        tip: 'Passer en argument un code ISO de langue pour restreindre la liste des langues'

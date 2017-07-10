@@ -1,0 +1,8 @@
+description: 'Nettoie les fichiers de traduction'
+arguments:
+    language: 'Langue pour laquelle nettoyer les fichiers, à partir de l''anglais'
+messages:
+    invalid-language: 'La langue "%s" est invalide'
+    language: Langue
+    file-deleted: 'Le fichier "%s" a été supprimé de "%s" car il n''est plus requis.'
+    success: 'Les fichiers inutiles ont été supprimés'

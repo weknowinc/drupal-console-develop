@@ -1,0 +1,5 @@
+description: 'Hasilkan dokumentasi untuk perintah-perintah.'
+options:
+    file: 'Berkas yang akan digunakan untuk menyimpan data perintah'
+messages:
+    missing_file: 'Berkas hilang, gunakan opsi --file.'

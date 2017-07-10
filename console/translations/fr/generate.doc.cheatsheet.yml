@@ -1,0 +1,18 @@
+description: 'Générer une antisèche imprimable des commandes'
+options:
+    path: 'Le chemin où générer le pdf de documentation'
+    wkhtmltopdf: 'Le chemin vers le fichier binaire de la librairie wkhtmltopdf dans votre système'
+messages:
+    missing_path: 'Le chemin est manquant'
+    title: 'L''antisèche de Drupal Console'
+    note: Note
+    note-description: 'Les commandes Drupal Console *doivent* être lancées depuis la racine d'une installation Drupal 8'
+    command: 'Commande Drupal Console'
+    command_description: 'La commande **"%s"** "%s"'
+    usage: Usage
+    options: 'Options disponibles'
+    option: Option
+    details: Détails
+    arguments: 'Arguments disponibles'
+    argument: Argument
+    examples: Exemples
