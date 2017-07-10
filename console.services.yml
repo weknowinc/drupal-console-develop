@@ -55,3 +55,9 @@ services:
     tags:
       - { name: drupal.command }
     lazy: true
+  console.develop_contribute:
+    class: \Drupal\Console\Develop\Command\ContributeCommand
+    arguments: ['@console.root', '@console.configuration_manager']
+    tags:
+      - { name: drupal.command }
+    lazy: true
