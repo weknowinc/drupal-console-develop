@@ -11,7 +11,7 @@ Drupal Console Develop, this project contains Drupal Console commands to maintai
 * generate:doc:data (gdda)             Generate documentations for Commands.
 * generate:doc:gitbook (gdg)     Generate documentations for Commands
 ```
-#### Translation command
+#### Translation commands
 ```
 * translation:cleanup (tc)       Clean up translation files
 * translation:pending (tp)       Determine pending translation string in a language or a specific file in a language
@@ -23,7 +23,7 @@ Drupal Console Develop, this project contains Drupal Console commands to maintai
 ```
 cd /path/to/drupal/
 
-composer require drupal/console-deveelop
+composer require drupal/console-develop
 ```
 
 ### Install globally:
