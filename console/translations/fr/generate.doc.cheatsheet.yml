@@ -6,7 +6,7 @@ messages:
     missing_path: 'Le chemin est manquant'
     title: 'L''antisèche de Drupal Console'
     note: Note
-    note-description: 'Les commandes Drupal Console *doivent* être lancées depuis la racine d'une installation Drupal 8'
+    note-description: 'Les commandes Drupal Console *doivent* être lancées depuis la racine d''une installation Drupal 8'
     command: 'Commande Drupal Console'
     command_description: 'La commande **"%s"** "%s"'
     usage: Usage

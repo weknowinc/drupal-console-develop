@@ -1,0 +1,27 @@
+description: 產生翻譯進度報告
+arguments:
+    language: 指定產生翻譯進度報告的語系名稱
+    library: 'Library to calculate translation stats against English i.e console-yaml'
+options:
+    format: '指定輸出格式為 table 或 markdown （預設為 table）'
+messages:
+    invalid-language: '錯誤的語系名稱 "%s"'
+    language: 語系
+    percentage: 完成度
+    iso: 'ISO 代碼'
+tips:
+    -
+        tip: '加入語言 ISO 代碼參數，可篩選要顯示的語言'
+examples:
+    -
+        description: 'Calculate translation stats in all languages.'
+        execution: 'drupal translation:stats'
+    -
+        description: 'Calculate translation stats in Spanish language'
+        execution: 'drupal translation:stats es'
+    -
+        description: 'Calculate translation stats in all languages in console-develop library'
+        execution: 'drupal translation:stats all console-develop'
+    -
+        description: 'Calculate translation stats in Spanish language in console-develop library'
+        execution: 'drupal translation:stats es console-develop'

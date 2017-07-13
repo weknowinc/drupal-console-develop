@@ -1,0 +1,22 @@
+description: 清理語系翻譯檔
+arguments:
+    language: 指定要清理的語系名稱
+    library: 'Library to clean up files against English i.e console-yaml'
+messages:
+    invalid-language: '錯誤的語系名稱 "%s"'
+    language: 語系
+    file-deleted: '"%s" 不再需要，已從"%s"語系刪除'
+    success: 不必要的檔案已經清理完畢
+examples:
+    -
+        description: 'Delete all unnecessary files in all languages.'
+        execution: 'drupal translation:cleanup'
+    -
+        description: 'Delete all unnecessary files in Spanish language'
+        execution: 'drupal translation:cleanup es'
+    -
+        description: 'Delete all unnecessary files in all languages in console-develop library'
+        execution: 'drupal translation:cleanup all console-develop'
+    -
+        description: 'Delete all unnecessary files in Spanish language in console-develop library'
+        execution: 'drupal translation:cleanup es console-develop'

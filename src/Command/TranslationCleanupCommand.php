@@ -18,6 +18,7 @@ use Drupal\Console\Core\Style\DrupalStyle;
 use Drupal\Console\Core\Command\Shared\CommandTrait;
 use Drupal\Console\Core\Utils\ConfigurationManager;
 use Drupal\Console\Annotations\DrupalCommand;
+use Drupal\views\Views;
 
 /**
  * Class TranslationCleanupCommand.
@@ -72,6 +73,12 @@ class TranslationCleanupCommand extends Command
                 $this->trans('commands.translation.cleanup.arguments.language'),
                 null
             )
+            ->addArgument(
+                'library',
+                InputArgument::OPTIONAL,
+                $this->trans('commands.translation.cleanup.arguments.library'),
+                null
+            )
             ->setAliases(['tc']);
     }
 
@@ -80,14 +87,16 @@ class TranslationCleanupCommand extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+
         $io = new DrupalStyle($input, $output);
 
         $language = $input->getArgument('language');
+        $library = $input->getArgument('library');
 
         $languages = $this->configurationManager->getConfiguration()->get('application.languages');
         unset($languages['en']);
 
-        if ($language && !isset($languages[$language])) {
+        if ($language && $language != 'all' && !isset($languages[$language])) {
             $io->error(
                 sprintf(
                     $this->trans('commands.translation.cleanup.messages.invalid-language'),
@@ -97,26 +106,56 @@ class TranslationCleanupCommand extends Command
             return 1;
         }
 
-        if ($language) {
+        if ($language &&$language != 'all') {
             $languages = [$language => $languages[$language]];
         }
 
-        $this->cleanupTranslations($io, $language, $languages);
+        $this->cleanupTranslations($io, $language, $library, $languages);
 
         $io->success(
             $this->trans('commands.translation.cleanup.messages.success')
         );
     }
 
-    protected function cleanupTranslations($io, $language = null, $languages)
+    protected function cleanupTranslations($io, $language = null, $library = null, $languages)
     {
-        $finder = new Finder();
+        if($library) {
+            $englishDirectory = $this->consoleRoot .
+                sprintf(
+                    DRUPAL_CONSOLE_LIBRARY,
+                    $library,
+                    'en'
+                );
+        } else {
+            $englishDirectory = $this->consoleRoot .
+                sprintf(
+                    DRUPAL_CONSOLE_LANGUAGE,
+                    'en'
+                );
+        }
+
 
         foreach ($languages as $langCode => $languageName) {
-            if (file_exists($this->consoleRoot . sprintf(DRUPAL_CONSOLE_LANGUAGE, $langCode))) {
-                foreach ($finder->files()->name('*.yml')->in($this->consoleRoot . sprintf(DRUPAL_CONSOLE_LANGUAGE, $langCode)) as $file) {
+            if($library) {
+                $langDirectory = $this->consoleRoot .
+                    sprintf(
+                        DRUPAL_CONSOLE_LIBRARY,
+                        $library,
+                        $langCode
+                    );
+            } else {
+                $langDirectory = $this->consoleRoot .
+                    sprintf(
+                        DRUPAL_CONSOLE_LANGUAGE,
+                        $langCode
+                    );
+            }
+
+            if (file_exists($langDirectory)) {
+                $finder = new Finder();
+                foreach ($finder->files()->name('*.yml')->in($langDirectory) as $file) {
                     $filename = $file->getBasename('.yml');
-                    if (!file_exists($this->consoleRoot . sprintf(DRUPAL_CONSOLE_LANGUAGE, 'en') . $filename . '.yml')) {
+                    if (!file_exists($englishDirectory . DIRECTORY_SEPARATOR .  $filename . '.yml')) {
                         $io->info(
                             sprintf(
                                 $this->trans('commands.translation.cleanup.messages.file-deleted'),
@@ -124,7 +163,7 @@ class TranslationCleanupCommand extends Command
                                 $languageName
                             )
                         );
-                        unlink($this->consoleRoot . sprintf(DRUPAL_CONSOLE_LANGUAGE, $langCode). '/' . $filename . '.yml');
+                        unlink($langDirectory. DIRECTORY_SEPARATOR . $filename . '.yml');
                     }
                 }
             }

@@ -72,6 +72,12 @@ class TranslationSyncCommand extends Command
                 $this->trans('commands.translation.sync.arguments.language'),
                 null
             )
+            ->addArgument(
+                'library',
+                InputArgument::OPTIONAL,
+                $this->trans('commands.translation.sync.arguments.library'),
+                null
+            )
             ->addOption(
                 'file',
                 null,
@@ -90,11 +96,12 @@ class TranslationSyncCommand extends Command
         $io = new DrupalStyle($input, $output);
 
         $language = $input->getArgument('language');
+        $library = $input->getArgument('library');
         $file = $input->getOption('file');
         $languages = $this->configurationManager->getConfiguration()->get('application.languages');
         unset($languages['en']);
 
-        if ($language && !isset($languages[$language])) {
+        if ($language && $language != 'all' && !isset($languages[$language])) {
             $io->error(
                 sprintf(
                     $this->trans('commands.translation.stats.messages.invalid-language'),
@@ -104,26 +111,35 @@ class TranslationSyncCommand extends Command
             return 1;
         }
 
-        if ($language) {
+        if ($language &&$language != 'all') {
             $languages = [$language => $languages[$language]];
         }
 
-        $this->syncTranslations($io, $language, $languages, $file);
+        $this->syncTranslations($io, $language, $library, $languages, $file);
 
         $io->success($this->trans('commands.translation.sync.messages.sync-finished'));
     }
 
-    protected function syncTranslations($io, $language = null, $languages, $file)
+    protected function syncTranslations($io, $language = null, $library = null, $languages, $file)
     {
         $englishFilesFinder = new Finder();
         $yaml = new Parser();
         $dumper = new Dumper();
 
-        $englishDirectory = $this->consoleRoot .
-            sprintf(
-                DRUPAL_CONSOLE_LANGUAGE,
-                'en'
-            );
+        if($library) {
+            $englishDirectory = $this->consoleRoot .
+                sprintf(
+                    DRUPAL_CONSOLE_LIBRARY,
+                    $library,
+                    'en'
+                );
+        } else {
+            $englishDirectory = $this->consoleRoot .
+                sprintf(
+                    DRUPAL_CONSOLE_LANGUAGE,
+                    'en'
+                );
+        }
 
         if ($file) {
             $englishFiles = $englishFilesFinder->files()->name($file)->in($englishDirectory);
@@ -144,19 +160,43 @@ class TranslationSyncCommand extends Command
             }
 
             foreach ($languages as $langCode => $languageName) {
-                $languageDir = $this->consoleRoot .
-                                        sprintf(
-                                            DRUPAL_CONSOLE_LANGUAGE,
-                                            $langCode
-                                        );
-                if (isset($language) && $langCode != $language) {
+
+                if($library) {
+                    $languageDir = $this->consoleRoot .
+                        sprintf(
+                            DRUPAL_CONSOLE_LIBRARY,
+                            $library,
+                            $langCode
+                        );
+                } else {
+                    $languageDir = $this->consoleRoot .
+                        sprintf(
+                            DRUPAL_CONSOLE_LANGUAGE,
+                            $langCode
+                        );
+                }
+
+                if (isset($language) && $langCode != $language && $language != 'all') {
                     continue;
                 }
+
+                if(!is_dir($languageDir)) {
+                    $io->info(
+                        sprintf(
+                            $this->trans('commands.translation.sync.messages.missing-language'),
+                            $languages[$langCode]
+                        )
+                    );
+                    unset($languages[$langCode]);
+                    continue;
+                }
+
                 if (!isset($statistics[$langCode])) {
                     $statistics[$langCode] = ['total' => 0, 'equal'=> 0 , 'diff' => 0];
                 }
 
                 $resourceTranslated = $languageDir . '/' . $file->getBasename();
+                //echo $resourceTranslated . "\n";
                 if (!file_exists($resourceTranslated)) {
                     file_put_contents($resourceTranslated, $englishFile);
                     $io->info(

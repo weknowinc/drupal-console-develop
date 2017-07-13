@@ -1,6 +1,7 @@
 description: 'Genera estadísticas de traducción'
 arguments:
     language: 'Idioma para generar estadísticas de traducción contra el inglés'
+    library: 'Library to generate translation stats against English i.e console-yaml'
 options:
     format: 'Define el formato de salida ( table|markdown )'
 messages:
@@ -11,3 +12,16 @@ messages:
 tips:
     -
         tip: 'Provea un código de idioma ISO como argumento para restringir el listado de idiomas'
+examples:
+    -
+        description: 'Calculate translation stats in all languages.'
+        execution: 'drupal translation:stats'
+    -
+        description: 'Calculate translation stats in Spanish language'
+        execution: 'drupal translation:stats es'
+    -
+        description: 'Calculate translation stats in all languages in console-develop library'
+        execution: 'drupal translation:stats all console-develop'
+    -
+        description: 'Calculate translation stats in Spanish language in console-develop library'
+        execution: 'drupal translation:stats es console-develop'

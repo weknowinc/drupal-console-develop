@@ -1,0 +1,22 @@
+description: 清理翻译文件
+arguments:
+    language: 语言代码
+    library: 'Library to clean up files against English i.e console-yaml'
+messages:
+    invalid-language: '语言代码 "%s" 无效'
+    language: 语言
+    file-deleted: '文件 "%s" 不在需要，已经从 "%s" 删除'
+    success: 无关文件已经被清理
+examples:
+    -
+        description: 'Delete all unnecessary files in all languages.'
+        execution: 'drupal translation:cleanup'
+    -
+        description: 'Delete all unnecessary files in Spanish language'
+        execution: 'drupal translation:cleanup es'
+    -
+        description: 'Delete all unnecessary files in all languages in console-develop library'
+        execution: 'drupal translation:cleanup all console-develop'
+    -
+        description: 'Delete all unnecessary files in Spanish language in console-develop library'
+        execution: 'drupal translation:cleanup es console-develop'

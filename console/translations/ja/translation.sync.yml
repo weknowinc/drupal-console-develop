@@ -1,6 +1,7 @@
 description: 翻訳ファイルを同期する
 arguments:
     language: 英語のソースファイルに対して同期する言語
+    library: 'Library to syncronize against English i.e console-yaml'
 options:
     file: 同期するファイル
 messages:
@@ -8,3 +9,17 @@ messages:
     error-generating: 'Error syncronizing file "%s" for "%s": "%s"'
     error-writing: 'Error writing file "%s" for "%s": "%s"'
     sync-finished: 翻訳ファイルの同期が完了しました。
+    missing-language: 'Language %s is missing'
+examples:
+    -
+        description: 'Syncronize translation files in all languages.'
+        execution: 'drupal translation:sync'
+    -
+        description: 'Syncronize translation files in Spanish language'
+        execution: 'drupal translation:sync es'
+    -
+        description: 'Syncronize translation files in all languages in console-develop library'
+        execution: 'drupal translation:sync all console-develop'
+    -
+        description: 'Syncronize translation files in Spanish language in console-develop library'
+        execution: 'drupal translation:sync es console-develop'

@@ -12,7 +12,7 @@ messages:
     usage: Penggunaan
     options: 'Opsi-opsi yang tersedia'
     option: Opsi
-    details: 'Detail-detail'
+    details: Detail-detail
     arguments: 'Argumen-argumen yang tersedia'
     argument: Argumen
-    examples: 'Contoh-contoh'
+    examples: Contoh-contoh

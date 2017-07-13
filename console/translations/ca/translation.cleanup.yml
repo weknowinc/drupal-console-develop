@@ -1,8 +1,22 @@
 description: 'Netejar el fitxer de traduccions'
 arguments:
     language: 'Fitxers de l''idioma a netejar contra l''anglès'
+    library: 'Library to clean up files against English i.e console-yaml'
 messages:
     invalid-language: 'L''idioma "%s" no és vàlid'
     language: Idioma
     file-deleted: 'El fitxer "%s" s''ha eliminat de "%s" degut a que ja no es necessari.'
     success: 'Fitxers innecessaris a esborrar'
+examples:
+    -
+        description: 'Delete all unnecessary files in all languages.'
+        execution: 'drupal translation:cleanup'
+    -
+        description: 'Delete all unnecessary files in Spanish language'
+        execution: 'drupal translation:cleanup es'
+    -
+        description: 'Delete all unnecessary files in all languages in console-develop library'
+        execution: 'drupal translation:cleanup all console-develop'
+    -
+        description: 'Delete all unnecessary files in Spanish language in console-develop library'
+        execution: 'drupal translation:cleanup es console-develop'

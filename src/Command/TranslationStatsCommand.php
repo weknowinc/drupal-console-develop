@@ -22,6 +22,7 @@ use Drupal\Console\Core\Utils\ConfigurationManager;
 use Drupal\Console\Core\Utils\TwigRenderer;
 use Drupal\Console\Core\Utils\NestedArray;
 use Drupal\Console\Annotations\DrupalCommand;
+use Drupal\Console\Core\Generator\Generator;
 
 /**
  * Class TranslationStatsCommand.
@@ -56,6 +57,11 @@ class TranslationStatsCommand extends Command
       * @var NestedArray
       */
     protected $nestedArray;
+
+    /**
+     * @var mixed array
+     */
+    protected $excludeTranslations = ['messages.console'];
 
     /**
      * TranslationStatsCommand constructor.
@@ -93,6 +99,12 @@ class TranslationStatsCommand extends Command
                 $this->trans('commands.translation.stats.arguments.language'),
                 null
             )
+            ->addArgument(
+                'library',
+                InputArgument::OPTIONAL,
+                $this->trans('commands.translation.stats.arguments.library'),
+                null
+            )
             ->addOption(
                 'format',
                 null,
@@ -111,12 +123,13 @@ class TranslationStatsCommand extends Command
         $io = new DrupalStyle($input, $output);
 
         $language = $input->getArgument('language');
+        $library = $input->getArgument('library');
         $format = $input->getOption('format');
 
         $languages = $this->configurationManager->getConfiguration()->get('application.languages');
         unset($languages['en']);
 
-        if ($language && !isset($languages[$language])) {
+        if ($language && $language != 'all' && !isset($languages[$language])) {
             $io->error(
                 sprintf(
                     $this->trans('commands.translation.stats.messages.invalid-language'),
@@ -126,11 +139,11 @@ class TranslationStatsCommand extends Command
             return 1;
         }
 
-        if ($language) {
+        if ($language &&$language != 'all') {
             $languages = [$language => $languages[$language]];
         }
 
-        $stats = $this->calculateStats($io, $language, $languages);
+        $stats = $this->calculateStats($io, $language, $library, $languages);
 
         if ($format == 'table') {
             $tableHeaders = [
@@ -150,33 +163,40 @@ class TranslationStatsCommand extends Command
             $arguments['languages'] = $stats;
 
             $io->writeln(
-                $this->renderFile(
+                $this->renderer->render(
                     'core/translation/stats.md.twig',
-                    null,
                     $arguments
                 )
             );
         }
     }
 
-    protected function calculateStats($io, $language = null, $languages)
+    protected function calculateStats($io, $language = null, $library = null, $languages)
     {
         $englishFilesFinder = new Finder();
         $yaml = new Parser();
         $statistics = [];
 
-        $englishDirectory = $this->consoleRoot .
-            sprintf(
-                DRUPAL_CONSOLE_LANGUAGE,
-                'en'
-            );
+        if($library) {
+            $englishDirectory = $this->consoleRoot .
+                sprintf(
+                    DRUPAL_CONSOLE_LIBRARY,
+                    $library,
+                    'en'
+                );
+        } else {
+            $englishDirectory = $this->consoleRoot .
+                sprintf(
+                    DRUPAL_CONSOLE_LANGUAGE,
+                    'en'
+                );
+        }
 
         $englishFiles = $englishFilesFinder->files()->name('*.yml')->in($englishDirectory);
 
         foreach ($englishFiles as $file) {
             $resource = $englishDirectory . '/' . $file->getBasename();
             $filename = $file->getBasename('.yml');
-
             try {
                 $englishFileParsed = $yaml->parse(file_get_contents($resource));
             } catch (ParseException $e) {
@@ -185,18 +205,29 @@ class TranslationStatsCommand extends Command
             }
 
             foreach ($languages as $langCode => $languageName) {
-                $languageDir = $this->consoleRoot .
-                                        sprintf(
-                                            DRUPAL_CONSOLE_LANGUAGE,
-                                            $langCode
-                                        );
+                if($library) {
+                    $languageDir = $this->consoleRoot .
+                        sprintf(
+                            DRUPAL_CONSOLE_LIBRARY,
+                            $library,
+                            $langCode
+                        );
+                } else {
+                    $languageDir = $this->consoleRoot .
+                        sprintf(
+                            DRUPAL_CONSOLE_LANGUAGE,
+                            $langCode
+                        );
+                }
                                 //don't show that language if that repo isn't present
                 if (!file_exists($languageDir)) {
                     continue;
                 }
-                if (isset($language) && $langCode != $language) {
+
+                if (isset($language) && $langCode != $language && $language != 'all') {
                     continue;
                 }
+
                 if (!isset($statistics[$langCode])) {
                     $statistics[$langCode] = ['total' => 0, 'equal'=> 0 , 'diff' => 0];
                 }
@@ -218,32 +249,33 @@ class TranslationStatsCommand extends Command
                 $diffStatistics = ['total' => 0, 'equal' => 0, 'diff' => 0];
                 $diff = $this->nestedArray->arrayDiff($englishFileParsed, $resourceTranslatedParsed, true, $diffStatistics);
 
-                $yamlKeys = 0;
+                $yamlPending = 0;
                 if (!empty($diff)) {
                     $diffFlatten = [];
                     $keyFlatten = '';
                     $this->nestedArray->yamlFlattenArray($diff, $diffFlatten, $keyFlatten);
 
-                    // Determine how many yaml keys were returned as values
-                    foreach ($diffFlatten as $yamlKey => $yamlValue) {
-                        if ($this->isYamlKey($yamlValue)) {
-                            $yamlKeys++;
-                        }
-                    }
+                    $diffFlatten = array_filter(
+                        $diffFlatten,
+                        array($this, 'validatePendingTranslation'),
+                        ARRAY_FILTER_USE_BOTH
+                    );
+
+                    $yamlPending = count($diffFlatten);
                 }
 
                 $statistics[$langCode]['total'] += $diffStatistics['total'];
-                $statistics[$langCode]['equal'] += ($diffStatistics['equal'] - $yamlKeys);
-                $statistics[$langCode]['diff'] += $diffStatistics['diff'] + $yamlKeys;
+                $statistics[$langCode]['pending'] += $diffStatistics['pending'] + $yamlPending;
             }
         }
 
         $stats = [];
         foreach ($statistics as $langCode => $statistic) {
             $index = isset($languages[$langCode])? $languages[$langCode]: $langCode;
+
             $stats[] = [
                 'name' => $index,
-                'percentage' => round($statistic['diff']/$statistic['total']*100, 2),
+                'percentage' => round(100 - $statistic['pending']/$statistic['total']*100, 2),
                 'iso' => $langCode
             ];
         }
@@ -255,5 +287,15 @@ class TranslationStatsCommand extends Command
         );
 
         return $stats;
+    }
+
+    public function validatePendingTranslation($value, $key) {
+        if (in_array($key, $this->excludeTranslations) ||
+            preg_match('/examples.\d+.execution/', $key) ||
+            $this->isYamlKey($value)) {
+            return false;
+        } else {
+            return true;
+        }
     }
 }

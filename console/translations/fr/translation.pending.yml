@@ -1,12 +1,28 @@
 description: 'Détermine les chaînes de caractère en attente de traduction dans une langue ou un fichier spécifique de langue'
 arguments:
     language: 'Langue pour laquelle déterminer les traductions en attente à partir de l''anglais'
+    library: 'Library to determine pending translations against English i.e console-yaml'
 options:
     file: 'Fichier spécifique pour lequel déterminer les traductions en attente à partir de l''anglais'
 messages:
     invalid-language: 'La langue "%s" est invalide'
     language: Langue
     pending-translations: 'Traduction en attente de "%s" dans le fichier "%s"'
-    missing-file: 'La langue "%s" n''a pas le fichier "%s", essayez d'exécuter la commande translation:sync'
+    missing-file: 'La langue "%s" n''''a pas le fichier "%s", essayez d''exécuter la commande translation:sync'
     success-language: 'Il y a "%s" traductions en attente pour "%s"'
     success-language-file: 'Il y a "%s" traductions en attente pour "%s" dans le fichier "%s"'
+    key: 'YAML Key'
+    value: 'YAML Value'
+examples:
+    -
+        description: 'Determine pending translation strings in all languages.'
+        execution: 'drupal translation:pending'
+    -
+        description: 'Determine pending translation strings in Spanish language'
+        execution: 'drupal translation:pending es'
+    -
+        description: 'Determine pending translation strings in all languages in console-develop library'
+        execution: 'drupal translation:pending all console-develop'
+    -
+        description: 'Determine pending translation strings in Spanish language in console-develop library'
+        execution: 'drupal translation:pending es console-develop'

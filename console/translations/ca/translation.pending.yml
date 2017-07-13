@@ -1,6 +1,7 @@
 description: 'Determinar cadena de traduccions pendent en un idioma o en un fitxer especific d''un idioma'
 arguments:
     language: 'Determinar idioma pendent de traduccions contra l''anglès'
+    library: 'Library to determine pending translations against English i.e console-yaml'
 options:
     file: 'Determinar idioma pendent de traduccions contra l''anglès'
 messages:
@@ -10,3 +11,18 @@ messages:
     missing-file: 'L''idioma "%s" no té un fitxer "%s", proveu executant translation:sync command'
     success-language: 'Hi han "%s" traduccions pendents per l''idioma "%s"'
     success-language-file: 'Hi han "%s" traduccions pendents de "%s" al fitxer "%s"'
+    key: 'YAML Key'
+    value: 'YAML Value'
+examples:
+    -
+        description: 'Determine pending translation strings in all languages.'
+        execution: 'drupal translation:pending'
+    -
+        description: 'Determine pending translation strings in Spanish language'
+        execution: 'drupal translation:pending es'
+    -
+        description: 'Determine pending translation strings in all languages in console-develop library'
+        execution: 'drupal translation:pending all console-develop'
+    -
+        description: 'Determine pending translation strings in Spanish language in console-develop library'
+        execution: 'drupal translation:pending es console-develop'

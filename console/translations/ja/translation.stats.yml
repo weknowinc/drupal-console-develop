@@ -1,6 +1,7 @@
 description: 翻訳の統計を生成する
 arguments:
     language: 英語に対しての翻訳の統計を生成する言語
+    library: 'Library to calculate translation stats against English i.e console-yaml'
 options:
     format: '出力フォーマットの定義 table|markdown'
 messages:
@@ -11,3 +12,16 @@ messages:
 tips:
     -
         tip: 'Pass a language ISO code as argument to restrict the languages list'
+examples:
+    -
+        description: 'Calculate translation stats in all languages.'
+        execution: 'drupal translation:stats'
+    -
+        description: 'Calculate translation stats in Spanish language'
+        execution: 'drupal translation:stats es'
+    -
+        description: 'Calculate translation stats in all languages in console-develop library'
+        execution: 'drupal translation:stats all console-develop'
+    -
+        description: 'Calculate translation stats in Spanish language in console-develop library'
+        execution: 'drupal translation:stats es console-develop'

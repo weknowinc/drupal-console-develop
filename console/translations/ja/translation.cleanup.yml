@@ -1,8 +1,22 @@
 description: 翻訳ファイルをクリーンアップする
 arguments:
     language: 英語に対してクリーンアップする言語
+    library: 'Library to clean up files against English i.e console-yaml'
 messages:
     invalid-language: '言語 "%s" は不正な値です。'
     language: 言語
     file-deleted: 'ファイル "%s" は不要になるため "%s" から削除されました。'
     success: 不要なファイルを削除しました。
+examples:
+    -
+        description: 'Delete all unnecessary files in all languages.'
+        execution: 'drupal translation:cleanup'
+    -
+        description: 'Delete all unnecessary files in Spanish language'
+        execution: 'drupal translation:cleanup es'
+    -
+        description: 'Delete all unnecessary files in all languages in console-develop library'
+        execution: 'drupal translation:cleanup all console-develop'
+    -
+        description: 'Delete all unnecessary files in Spanish language in console-develop library'
+        execution: 'drupal translation:cleanup es console-develop'

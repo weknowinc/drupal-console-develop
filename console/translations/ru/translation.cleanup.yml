@@ -1,8 +1,22 @@
 description: 'Очистить файлы переводов'
 arguments:
     language: 'Language to clean up files against English'
+    library: 'Library to clean up files against English i.e console-yaml'
 messages:
     invalid-language: 'Недопустимый язык "%s"'
     language: Язык
     file-deleted: 'Файл "%s" был удалён "%s" т.к. больше не требуется'
     success: 'Ненужные файлы были удалены'
+examples:
+    -
+        description: 'Delete all unnecessary files in all languages.'
+        execution: 'drupal translation:cleanup'
+    -
+        description: 'Delete all unnecessary files in Spanish language'
+        execution: 'drupal translation:cleanup es'
+    -
+        description: 'Delete all unnecessary files in all languages in console-develop library'
+        execution: 'drupal translation:cleanup all console-develop'
+    -
+        description: 'Delete all unnecessary files in Spanish language in console-develop library'
+        execution: 'drupal translation:cleanup es console-develop'

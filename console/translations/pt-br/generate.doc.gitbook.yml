@@ -15,17 +15,3 @@ messages:
     arguments: 'Argumentos disponíveis'
     argument: Argumento
     examples: Exemplos
-output:
-    available-commands:
-        title: 'Comandos Drupal Console disponíveis'
-        note: Nota
-        note-description: 'Comandos Drupal Console que *devem* ser executados desde a raiz de uma instalação Drupal 8'
-        command: 'Comando Drupal Console'
-    command:
-        command_description: 'O **"%s"** comando "%s"'
-        usage: Uso
-        options: 'Opções disponíveis'
-        option: Opções
-        details: Detalhes
-        arguments: 'Argumentos disponíveis'
-        argument: Argumento

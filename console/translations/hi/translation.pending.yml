@@ -1,6 +1,7 @@
 description: 'पेंडिंग ट्रांसलेशन स्ट्रिंग को एक भाषा में या एक स्पेसिफिक फाइल को एक भाषा में निर्धारण करें'
 arguments:
     language: 'इंग्लिश के खिलाफ पेंडिंग ट्रांसलेशन्स निर्धारित करने के लिए विशिष्ट फ़ाइल'
+    library: 'Library to determine pending translations against English i.e console-yaml'
 options:
     file: 'इंग्लिश के खिलाफ पेंडिंग ट्रांसलेशन्स निर्धारित करने के लिए विशिष्ट फ़ाइल'
 messages:
@@ -10,3 +11,18 @@ messages:
     missing-file: 'भाषा "%s" फ़ाइल "%s" के पास नहीं है, translation:sync कमांड एक्सेक्यूट करने का प्रयास करे'
     success-language: 'यहाँ "%s" के लिए "%s" ट्रांसलेशन्स पेंडिंग  है'
     success-language-file: 'यहाँ फ़ाइल "%s" के लिए "%s" ट्रांसलेशन्स पेंडिंग है'
+    key: 'YAML Key'
+    value: 'YAML Value'
+examples:
+    -
+        description: 'Determine pending translation strings in all languages.'
+        execution: 'drupal translation:pending'
+    -
+        description: 'Determine pending translation strings in Spanish language'
+        execution: 'drupal translation:pending es'
+    -
+        description: 'Determine pending translation strings in all languages in console-develop library'
+        execution: 'drupal translation:pending all console-develop'
+    -
+        description: 'Determine pending translation strings in Spanish language in console-develop library'
+        execution: 'drupal translation:pending es console-develop'

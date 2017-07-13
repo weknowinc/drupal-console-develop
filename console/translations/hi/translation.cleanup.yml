@@ -1,8 +1,22 @@
 description: 'क्लीनअप ट्रांसलेशन फाइल्स'
 arguments:
     language: 'इंग्लिश के खिलाफ क्लीनअप फाइल के लिए भाषा'
+    library: 'Library to clean up files against English i.e console-yaml'
 messages:
     invalid-language: 'भाषा "%s" अवैध है'
     language: भाषा
     file-deleted: 'फ़ाइल "%s" अब जरूरी नहीं है की वजह से "%s" से हटाया गया।'
     success: 'अनावश्यक फ़ाइले क्लीनअप थे'
+examples:
+    -
+        description: 'Delete all unnecessary files in all languages.'
+        execution: 'drupal translation:cleanup'
+    -
+        description: 'Delete all unnecessary files in Spanish language'
+        execution: 'drupal translation:cleanup es'
+    -
+        description: 'Delete all unnecessary files in all languages in console-develop library'
+        execution: 'drupal translation:cleanup all console-develop'
+    -
+        description: 'Delete all unnecessary files in Spanish language in console-develop library'
+        execution: 'drupal translation:cleanup es console-develop'

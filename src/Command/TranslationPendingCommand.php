@@ -51,6 +51,11 @@ class TranslationPendingCommand extends Command
       */
     protected $nestedArray;
 
+    /**
+     * @var mixed array
+     */
+    protected $excludeTranslations = ['messages.console'];
+
 
     /**
      * TranslationPendingCommand constructor.
@@ -85,6 +90,12 @@ class TranslationPendingCommand extends Command
                 $this->trans('commands.translation.pending.arguments.language'),
                 null
             )
+            ->addArgument(
+                'library',
+                InputArgument::OPTIONAL,
+                $this->trans('commands.translation.pending.arguments.library'),
+                null
+            )
             ->addOption(
                 'file',
                 null,
@@ -103,12 +114,13 @@ class TranslationPendingCommand extends Command
         $io = new DrupalStyle($input, $output);
 
         $language = $input->getArgument('language');
+        $library = $input->getArgument('library');
         $file = $input->getOption('file');
 
         $languages = $this->configurationManager->getConfiguration()->get('application.languages');
         unset($languages['en']);
 
-        if ($language && !isset($languages[$language])) {
+        if ($language && $language != 'all' && !isset($languages[$language])) {
             $io->error(
                 sprintf(
                     $this->trans('commands.translation.pending.messages.invalid-language'),
@@ -118,11 +130,11 @@ class TranslationPendingCommand extends Command
             return 1;
         }
 
-        if ($language) {
+        if ($language &&$language != 'all') {
             $languages = [$language => $languages[$language]];
         }
 
-        $pendingTranslations = $this->determinePendingTranslation($io, $language, $languages, $file);
+        $pendingTranslations = $this->determinePendingTranslation($io, $language, $library, $languages, $file);
 
         if ($file) {
             $io->success(
@@ -144,17 +156,26 @@ class TranslationPendingCommand extends Command
         }
     }
 
-    protected function determinePendingTranslation($io, $language = null, $languages, $fileFilter)
+    protected function determinePendingTranslation($io, $language = null, $library = null, $languages, $fileFilter)
     {
         $englishFilesFinder = new Finder();
         $yaml = new Parser();
         $statistics = [];
 
-        $englishDirectory = $this->consoleRoot .
-            sprintf(
-                DRUPAL_CONSOLE_LANGUAGE,
-                'en'
-            );
+        if($library) {
+            $englishDirectory = $this->consoleRoot .
+                sprintf(
+                    DRUPAL_CONSOLE_LIBRARY,
+                    $library,
+                    'en'
+                );
+        } else {
+            $englishDirectory = $this->consoleRoot .
+                sprintf(
+                    DRUPAL_CONSOLE_LANGUAGE,
+                    'en'
+                );
+        }
 
         $englishFiles = $englishFilesFinder->files()->name('*.yml')->in($englishDirectory);
 
@@ -175,12 +196,22 @@ class TranslationPendingCommand extends Command
             }
 
             foreach ($languages as $langCode => $languageName) {
-                $languageDir = $this->consoleRoot .
-                                        sprintf(
-                                            DRUPAL_CONSOLE_LANGUAGE,
-                                            $langCode
-                                        );
-                if (isset($language) && $langCode != $language) {
+                if($library) {
+                    $languageDir = $this->consoleRoot .
+                        sprintf(
+                            DRUPAL_CONSOLE_LIBRARY,
+                            $library,
+                            $langCode
+                        );
+                } else {
+                    $languageDir = $this->consoleRoot .
+                        sprintf(
+                            DRUPAL_CONSOLE_LANGUAGE,
+                            $langCode
+                        );
+                }
+
+                if (isset($language) && $langCode != $language && $language != 'all') {
                     continue;
                 }
 
@@ -203,6 +234,8 @@ class TranslationPendingCommand extends Command
                 }
 
                 $diffStatistics = ['total' => 0, 'equal' => 0, 'diff' => 0];
+
+                // Calculate diff excluding examples execution
                 $diff = $this->nestedArray->arrayDiff($englishFileParsed, $resourceTranslatedParsed, true, $diffStatistics);
 
                 if (!empty($diff)) {
@@ -211,20 +244,24 @@ class TranslationPendingCommand extends Command
                     $this->nestedArray->yamlFlattenArray($diff, $diffFlatten, $keyFlatten);
 
                     $tableHeader = [
-                        $this->trans('commands.yaml.diff.messages.key'),
-                        $this->trans('commands.yaml.diff.messages.value'),
+                        $this->trans('commands.translation.pending.messages.key'),
+                        $this->trans('commands.translation.pending.messages.value'),
                     ];
 
                     $tableRows = [];
+
+                    $diffFlatten = array_filter(
+                        $diffFlatten,
+                        array($this, 'validatePendingTranslation'),
+                        ARRAY_FILTER_USE_BOTH
+                    );
+
                     foreach ($diffFlatten as $yamlKey => $yamlValue) {
-                        if ($this->isYamlKey($yamlValue)) {
-                            unset($diffFlatten[$yamlKey]);
-                        } else {
-                            $tableRows[] = [
-                                $yamlKey,
-                                $yamlValue
-                            ];
-                        }
+                        $tableRows[] = [
+                            $yamlKey,
+                            $yamlValue
+                        ];
+
                     }
 
                     if (count($diffFlatten)) {
@@ -244,5 +281,15 @@ class TranslationPendingCommand extends Command
         }
 
         return $pendingTranslations;
+    }
+
+    public function validatePendingTranslation($value, $key) {
+        if (in_array($key, $this->excludeTranslations) ||
+            preg_match('/examples.\d+.execution/', $key) ||
+            $this->isYamlKey($value)) {
+            return false;
+        } else {
+            return true;
+        }
     }
 }

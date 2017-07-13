@@ -1,8 +1,22 @@
 description: 'Ficheros de limpieza de traducción'
 arguments:
     language: 'Idioma al que hacer limpieza de sus ficheros contra el inglés'
+    library: 'Library to clean up files against English i.e console-yaml'
 messages:
     invalid-language: 'El idioma "%s" no es válido'
     language: Idioma
     file-deleted: 'El fichero "%s" ha sido eliminado de "%s" ya que ya no es necesario.'
     success: 'Los ficheros innecesarios han sido limpiados'
+examples:
+    -
+        description: 'Delete all unnecessary files in all languages.'
+        execution: 'drupal translation:cleanup'
+    -
+        description: 'Delete all unnecessary files in Spanish language'
+        execution: 'drupal translation:cleanup es'
+    -
+        description: 'Delete all unnecessary files in all languages in console-develop library'
+        execution: 'drupal translation:cleanup all console-develop'
+    -
+        description: 'Delete all unnecessary files in Spanish language in console-develop library'
+        execution: 'drupal translation:cleanup es console-develop'
