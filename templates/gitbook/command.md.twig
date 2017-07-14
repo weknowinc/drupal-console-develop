@@ -33,7 +33,7 @@ drupal {{ name }}{% if arguments|length>0 %} [arguments]{% endif %}{% if options
 {% for example in examples %}
 * {{ example.description }}
 ```
-{{ example.execution | trim }}
+{{ example.execution | trim(side='right') }}
 ```
 {% endfor %}
 {% endif %}
