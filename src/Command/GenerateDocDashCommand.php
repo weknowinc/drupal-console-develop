@@ -188,6 +188,8 @@ PLIST;
           'css_path' => 'style.css'
         ];
 
+        $this->renderer->addSkeletonDir(__DIR__ . '/../../templates');
+
         // Set the index page
         $this->renderFile(
             'dash/index.html.twig',

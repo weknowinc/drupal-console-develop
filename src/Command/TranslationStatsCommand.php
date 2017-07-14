@@ -162,6 +162,8 @@ class TranslationStatsCommand extends Command
 
             $arguments['languages'] = $stats;
 
+            $this->renderer->addSkeletonDir(__DIR__ . '/../../templates');
+
             $io->writeln(
                 $this->renderer->render(
                     'core/translation/stats.md.twig',

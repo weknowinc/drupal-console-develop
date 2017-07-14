@@ -83,6 +83,8 @@ class GenerateDocGitbookCommand extends Command
             return 1;
         }
 
+        $this->renderer->addSkeletonDir(__DIR__ . '/../../templates');
+
         $application = $this->getApplication();
         $applicationData = $application->getData();
         $namespaces = $applicationData['application']['namespaces'];
