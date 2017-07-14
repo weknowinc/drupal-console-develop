@@ -73,6 +73,7 @@ class ContributeCommand extends Command
     protected function configure()
     {
         $this->setName('develop:contribute')
+            ->setDescription($this->trans('commands.develop.contribute.description'))
             ->addOption(
                 'code-directory',
                 null,
@@ -87,6 +88,13 @@ class ContributeCommand extends Command
     protected function interact(InputInterface $input, OutputInterface $output)
     {
         $io = new DrupalStyle($input, $output);
+
+        $io->newLine();
+        $io->comment(
+            trim($this->trans('commands.develop.contribute.messages.info')),
+            false
+        );
+
         $codeDirectory = $input->getOption('code-directory');
         if (!$codeDirectory) {
             $codeDirectory = $io->ask(

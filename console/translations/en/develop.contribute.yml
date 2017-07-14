@@ -4,6 +4,10 @@ options:
 questions:
   code-directory: 'Enter the directory where the projects where cloned'
 messages:
+  info: |
+    Make sure you fork and clone drupal/console repositories at the
+     same parent directory and follow instructions at:
+     https://docs.drupalconsole.com/en/contributing/new-features.html
   no-directory: 'A directory where the projects where cloned is required'
   symlink: 'Creating symlinks between directories.'
   copy: 'Autoload file "%s" copied as "%s".'
