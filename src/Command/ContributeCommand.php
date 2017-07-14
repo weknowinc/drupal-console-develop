@@ -40,13 +40,15 @@ class ContributeCommand extends Command
      */
     protected $configurationManager;
 
+    /**
+     * @var array
+     */
     protected $packages = [
         'drupal-console',
-        'drupal-console-en',
         'drupal-console-core',
         'drupal-console-extend-plugin',
-        'drupal-console-dotenv',
         'drupal-console-develop',
+        'drupal-console-dotenv',
         'drupal-console-yaml'
     ];
 
@@ -65,6 +67,9 @@ class ContributeCommand extends Command
         parent::__construct();
     }
 
+    /**
+     * {@inheritdoc}
+     */
     protected function configure()
     {
         $this->setName('develop:contribute')
@@ -98,35 +103,100 @@ class ContributeCommand extends Command
     {
         $io = new DrupalStyle($input, $output);
         $codeDirectory = $input->getOption('code-directory');
-        $fileSystem = new Filesystem();
+        if (!$codeDirectory) {
+            $io->error(
+                $this->trans('commands.develop.contribute.messages.no-directory')
+            );
+        }
+        $codeDirectory = $str = rtrim($codeDirectory, '/');
+
+        $io->writeln(
+            $this->trans('commands.develop.contribute.messages.symlink')
+        );
 
         foreach ($this->packages as $package) {
-            $projectPath = $codeDirectory . '/' . $package;
-            $packagePath = $this->consoleRoot . '/vendor/drupal/' . substr($package, 7, strlen($package));
-            if ($fileSystem->exists([$projectPath,$packagePath])) {
-                $fileSystem->remove($packagePath);
-                $fileSystem->symlink(
-                    $projectPath,
-                    $packagePath
-                );
-                $io->writeln($this->trans('commands.develop.contribute.messages.symlink'));
-                $io->info(
-                    $fileSystem->makePathRelative(
-                        $packagePath,
-                        $this->consoleRoot
-                    ) . ' => ',
-                    false
-                );
-                $io->comment(
-                    $fileSystem->makePathRelative(
-                        $projectPath,
-                        $this->consoleRoot
-                    )
-                );
-            }
+            $projectDirectory = $codeDirectory . '/' . $package;
+            $packageDirectory = $this->consoleRoot . '/vendor/drupal/' . substr($package, 7, strlen($package));
+            $this->symlinkDirectory(
+                $io,
+                $projectDirectory,
+                $packageDirectory
+            );
         }
+
+        $languages = $this->configurationManager
+                ->getConfiguration()
+                ->get('application.languages');
+
+        foreach ($languages as $languageKey => $language) {
+            $projectDirectory = $codeDirectory . '/drupal-console-' . $languageKey;
+            $packageDirectory = $this->consoleRoot . '/vendor/drupal/console-' . $languageKey;
+            $this->symlinkDirectory(
+                $io,
+                $projectDirectory,
+                $packageDirectory
+            );
+        }
+
         $autoloadDistOriginal = $codeDirectory.'/'.$this->packages[0].'/autoload.local.php.dist';
         $autoloadDistLocal = $codeDirectory.'/'.$this->packages[0].'/autoload.local.php';
+        $this->copyAutoloadFile(
+            $io,
+            $autoloadDistOriginal,
+            $autoloadDistLocal
+        );
+    }
+
+    /**
+     * @param DrupalStyle   $io
+     * @param string        $projectDirectory
+     * @param string        $packageDirectory
+     */
+    protected function symlinkDirectory(
+        DrupalStyle $io,
+        $projectDirectory,
+        $packageDirectory
+    ) {
+        $fileSystem = new Filesystem();
+        if ($fileSystem->exists([$projectDirectory, $packageDirectory])) {
+            $fileSystem->remove($packageDirectory);
+            $fileSystem->symlink(
+                $projectDirectory,
+                $packageDirectory
+            );
+            $io->info(
+                rtrim(
+                    $fileSystem->makePathRelative(
+                        $packageDirectory,
+                        $this->consoleRoot
+                    ),
+                    '/'
+                ) . ' => ',
+                    FALSE
+            );
+            $io->writeln(
+                rtrim(
+                    $fileSystem->makePathRelative(
+                        $projectDirectory,
+                        $this->consoleRoot
+                    ),
+                    '/'
+                )
+            );
+        }
+    }
+
+    /**
+     * @param DrupalStyle   $io
+     * @param string        $autoloadDistOriginal
+     * @param string        $autoloadDistLocal
+     */
+    protected function copyAutoloadFile(
+        DrupalStyle $io,
+        $autoloadDistOriginal,
+        $autoloadDistLocal
+    ) {
+        $fileSystem = new Filesystem();
         if ($fileSystem->exists($autoloadDistOriginal) && !$fileSystem->exists($autoloadDistLocal)) {
             $io->writeln(
                 sprintf(

@@ -1,8 +1,9 @@
 description: 'Create symlinks between Drupal site and cloned repositories.'
 options:
-  code-directory: 'The path where the projects where cloned'
+  code-directory: 'The directory where the projects where cloned'
 questions:
-  code-directory: 'Enter the path where the projects where cloned'
+  code-directory: 'Enter the directory where the projects where cloned'
 messages:
+  no-directory: 'A directory where the projects where cloned is required'
   symlink: 'Creating symlinks between directories.'
   copy: 'Autoload file "%s" copied as "%s".'
