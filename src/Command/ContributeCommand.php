@@ -49,7 +49,25 @@ class ContributeCommand extends Command
         'drupal-console-extend-plugin',
         'drupal-console-develop',
         'drupal-console-dotenv',
-        'drupal-console-yaml'
+        'drupal-console-yaml',
+	'drupal-console-en',
+	'drupal-console-ca',
+	'drupal-console-es'
+	'drupal-console-fr',
+	'drupal-console-hi',
+	'drupal-console-hu'
+	'drupal-console-id',
+	'drupal-console-ja',
+	'drupal-console-ko'
+	'drupal-console-mr',
+	'drupal-console-pa',
+	'drupal-console-pt-br'
+	'drupal-console-ro',
+	'drupal-console-ru',
+	'drupal-console-tl'
+	'drupal-console-vn',
+	'drupal-console-zh-hans',
+	'drupal-console-zh-hant'
     ];
 
     /**
