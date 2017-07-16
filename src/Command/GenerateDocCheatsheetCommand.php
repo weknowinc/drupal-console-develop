@@ -62,7 +62,6 @@ class GenerateDocCheatsheetCommand extends Command
       'site',
       'update',
       'theme'
-
     ];
 
     private $logoUrl = 'http://drupalconsole.com/themes/custom/drupalconsole/assets/src/images/drupal-console.png';

@@ -2,7 +2,7 @@
 
 /**
  * @file
- * Contains \Drupal\Console\Develop\Command\ContributeCommand.
+ * Contains \Drupal\Console\Develop\Command\CreateSymlinksCommand.
  */
 
 namespace Drupal\Console\Develop\Command;
@@ -18,7 +18,7 @@ use Drupal\Console\Core\Style\DrupalStyle;
 use Symfony\Component\Filesystem\Filesystem;
 
 /**
- * Class ContributeCommand.
+ * Class CreateSymlinksCommand.
  *
  * @DrupalCommand (
  *     extension="drupal/console-develop",
@@ -26,7 +26,7 @@ use Symfony\Component\Filesystem\Filesystem;
  * )
  */
 
-class ContributeCommand extends Command
+class CreateSymlinksCommand extends Command
 {
     use CommandTrait;
 
@@ -72,13 +72,13 @@ class ContributeCommand extends Command
      */
     protected function configure()
     {
-        $this->setName('develop:contribute')
-            ->setDescription($this->trans('commands.develop.contribute.description'))
+        $this->setName('develop:create:symlinks')
+            ->setDescription($this->trans('commands.develop.create.symlinks.description'))
             ->addOption(
                 'code-directory',
                 null,
                 InputOption::VALUE_OPTIONAL,
-                $this->trans('commands.develop.contribute.options.code-directory')
+                $this->trans('commands.develop.create.symlinks.options.code-directory')
             );
     }
 
@@ -91,14 +91,14 @@ class ContributeCommand extends Command
 
         $io->newLine();
         $io->comment(
-            trim($this->trans('commands.develop.contribute.messages.info')),
+            trim($this->trans('commands.develop.create.symlinks.messages.info')),
             false
         );
 
         $codeDirectory = $input->getOption('code-directory');
         if (!$codeDirectory) {
             $codeDirectory = $io->ask(
-                $this->trans('commands.develop.contribute.questions.code-directory')
+                $this->trans('commands.develop.create.symlinks.questions.code-directory')
             );
             $input->setOption('code-directory', $codeDirectory);
         }
@@ -113,13 +113,13 @@ class ContributeCommand extends Command
         $codeDirectory = $input->getOption('code-directory');
         if (!$codeDirectory) {
             $io->error(
-                $this->trans('commands.develop.contribute.messages.no-directory')
+                $this->trans('commands.develop.create.symlinks.messages.no-directory')
             );
         }
         $codeDirectory = $str = rtrim($codeDirectory, '/');
 
         $io->writeln(
-            $this->trans('commands.develop.contribute.messages.symlink')
+            $this->trans('commands.develop.create.symlinks.messages.symlink')
         );
 
         foreach ($this->packages as $package) {
@@ -208,7 +208,7 @@ class ContributeCommand extends Command
         if ($fileSystem->exists($autoloadDistOriginal) && !$fileSystem->exists($autoloadDistLocal)) {
             $io->writeln(
                 sprintf(
-                    $this->trans('commands.develop.contribute.messages.copy'),
+                    $this->trans('commands.develop.create.symlinks.messages.copy'),
                     $fileSystem->makePathRelative(
                         $autoloadDistOriginal,
                         $this->consoleRoot

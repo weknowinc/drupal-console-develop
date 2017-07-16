@@ -70,7 +70,7 @@ class ExampleContainerAwareCommand extends Command
          */
         $io = new DrupalStyle($input, $output);
         $io->simple('This text could be translatable by');
-        $io->simple('adding a YAML file at "config/translations/LANGUAGE/command.name.yml"');
+        $io->simple('adding a YAML file at "console/translations/LANGUAGE/command.name.yml"');
 
         /**
          *  By using ContainerAwareCommandTrait on your class for the command

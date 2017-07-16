@@ -3,61 +3,50 @@ services:
     class: \Drupal\Console\Develop\Command\ExampleCommand
     tags:
      - { name: drupal.command }
-    lazy: true
   console.develop_example_container_aware_command:
     class: \Drupal\Console\Develop\Command\ExampleContainerAwareCommand
     tags:
       - { name: drupal.command }
-    lazy: true
   console.develop_generate_doc_cheatsheet_command:
     class: \Drupal\Console\Develop\Command\GenerateDocCheatsheetCommand
     tags:
       - { name: drupal.command }
-    lazy: true
   console.develop_generate_doc_dash_command:
     class: \Drupal\Console\Develop\Command\GenerateDocDashCommand
     arguments: ['@console.renderer', '@console.root']
     tags:
       - { name: drupal.command }
-    lazy: true
   console.develop_denerate_doc_data_command:
     class: \Drupal\Console\Develop\Command\GenerateDocDataCommand
     tags:
       - { name: drupal.command }
-    lazy: true
   console.develop_generate_doc_gitbook_command:
     class: \Drupal\Console\Develop\Command\GenerateDocGitbookCommand
     arguments: ['@console.renderer']
     tags:
       - { name: drupal.command }
-    lazy: true
   console.develop_translation_cleanup_command:
     class: \Drupal\Console\Develop\Command\TranslationCleanupCommand
     arguments: ['@console.root', '@console.configuration_manager']
     tags:
       - { name: drupal.command }
-    lazy: true
   console.develop_translation_pending_command:
     class: \Drupal\Console\Develop\Command\TranslationPendingCommand
     arguments: ['@console.root', '@console.configuration_manager', '@console.nested_array']
     tags:
       - { name: drupal.command }
-    lazy: true
   console.develop_translation_stats_command:
     class: \Drupal\Console\Develop\Command\TranslationStatsCommand
     arguments: ['@console.root', '@console.configuration_manager', '@console.renderer', '@console.nested_array']
     tags:
       - { name: drupal.command }
-    lazy: true
   console.develop_translation_sync_command:
     class: \Drupal\Console\Develop\Command\TranslationSyncCommand
     arguments: ['@console.root', '@console.configuration_manager']
     tags:
       - { name: drupal.command }
-    lazy: true
   console.develop_contribute:
-    class: \Drupal\Console\Develop\Command\ContributeCommand
+    class: \Drupal\Console\Develop\Command\CreateSymlinksCommand
     arguments: ['@console.root', '@console.configuration_manager']
     tags:
       - { name: drupal.command }
-    lazy: true
