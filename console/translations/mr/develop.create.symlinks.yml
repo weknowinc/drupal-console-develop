@@ -1,0 +1,10 @@
+description: 'Create symlinks between Drupal site and cloned repositories.'
+options:
+    code-directory: 'The directory where the projects were cloned'
+questions:
+    code-directory: 'Enter the directory where the projects were cloned'
+messages:
+    info: "Make sure you forked and cloned drupal console repositories at the\n same parent directory and follow instructions at:\n https://docs.drupalconsole.com/en/contributing/new-features.html\n"
+    no-directory: 'A directory where the projects were cloned is required'
+    symlink: 'Creating symlinks between directories.'
+    copy: 'Autoload file "%s" copied as "%s".'
