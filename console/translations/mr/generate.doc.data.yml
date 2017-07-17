@@ -1,5 +1,5 @@
-description: 'Generate documentations for Commands.'
+description: 'कमांडसाठी डॉक्युमेंटेशन उत्पन्न करा.'
 options:
-    file: 'The file to render the command data'
+    file: 'आदेश डेटा रेंडर करण्यासाठी फाइल.'
 messages:
-    missing_file: 'The file is missing, use --file option.'
+    missing_file: 'फाइल गहाळ आहे, --file पर्याय वापरा'

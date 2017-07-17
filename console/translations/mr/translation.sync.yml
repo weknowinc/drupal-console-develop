@@ -1,25 +1,25 @@
-description: 'Sync translation files'
+description: 'भाषांतर फायली समक्रमित करा.'
 arguments:
-    language: 'Language to syncronize against English source files'
-    library: 'Library to syncronize against English i.e console-yaml'
+    language: 'इंग्रजी स्त्रोत फायलींशी संकालित करण्यासाठी भाषा.'
+    library: 'इंग्रजी विरूद्ध समन्वय साधण्यासाठी लायब्ररी i.e console-yaml'
 options:
-    file: 'Language file to be syncronize'
+    file: 'भाषा फाइल समक्रमित करणे.'
 messages:
-    created-file: 'Yaml file "%s" was created for language "%s"'
-    error-generating: 'Error syncronizing file "%s" for "%s": "%s"'
-    error-writing: 'Error writing file "%s" for "%s": "%s"'
-    sync-finished: 'Syncronization of translation files was completed'
-    missing-language: 'Language %s is missing'
+    created-file: 'Yaml फाइल "%s" तयार करण्यात आली "%s" भाषेसाठी.'
+    error-generating: '"%s" साठी फाइल "%s" संकालित करताना त्रुटी: "%s"'
+    error-writing: '"%s" फाइल "%s" साठी लिहिताना त्रुटी: "%s"'
+    sync-finished: 'अनुवाद फायलींचे संकालन पूर्ण झाले.'
+    missing-language: 'भाषा %s गहाळ आहे.'
 examples:
     -
-        description: 'Syncronize translation files in all languages.'
+        description: 'सर्व भाषांमध्ये अनुवाद फायली समक्रमित करा.'
         execution: 'drupal translation:sync'
     -
-        description: 'Syncronize translation files in Spanish language'
+        description: 'स्पॅनिश भाषेत अनुवाद फायली समक्रमित करा.'
         execution: 'drupal translation:sync es'
     -
-        description: 'Syncronize translation files in all languages in console-develop library'
+        description: 'console-develop लायब्ररीमधील सर्व भाषांमध्ये भाषांतर फायलींचे संकालन करणे.'
         execution: 'drupal translation:sync all console-develop'
     -
-        description: 'Syncronize translation files in Spanish language in console-develop library'
+        description: 'console-develop लायब्ररीमधील स्पॅनिश भाषेतील अनुवाद फायली समक्रमित करा.'
         execution: 'drupal translation:sync es console-develop'

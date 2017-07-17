@@ -1,8 +1,8 @@
-description: 'Create symlinks between Drupal site and cloned repositories.'
+description: 'Drupal साइट आणि क्लोनिंग रेपॉजिटरीज दरम्यान सिमलिंक्स तयार करा.'
 options:
-    code-directory: 'The path where the projects where cloned'
+    code-directory: 'जेथे क्लोन प्रकल्प आहे तो मार्ग'
 questions:
-    code-directory: 'Enter the path where the projects where cloned'
+    code-directory: 'जेथे क्लोन प्रकल्प आहे तो मार्ग प्रविष्ट करा.'
 messages:
-    symlink: 'Creating symlinks between directories.'
-    copy: 'Autoload file "%s" copied as "%s".'
+    symlink: 'डिरेक्टरीज अंतर्गत सिमुलिंक तयार करणे.'
+    copy: 'स्वयंलोड फाइल "%s" म्हणून "%s" कॉपी केली.'

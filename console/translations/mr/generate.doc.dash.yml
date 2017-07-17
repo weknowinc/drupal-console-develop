@@ -1,5 +1,5 @@
-description: 'Generate the DrupalConsole.docset package for Dash'
+description: 'डॅशसाठी DrupalConsole.docset पॅकेज उत्पन्न करा.'
 options:
-    path: 'The path to the directory where the docset will be saved.'
+    path: 'निर्देशिकेचा पथ जिथे डॉकसेट जतन केला जाईल.'
 messages:
-    missing_path: 'the path is missing'
+    missing_path: 'पथ गहाळ आहे.'

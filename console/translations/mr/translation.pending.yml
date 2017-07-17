@@ -1,28 +1,28 @@
-description: 'Determine pending translation string in a language or a specific file in a language'
+description: 'भाषेत प्रलंबित भाषांतरण स्ट्रिंग किंवा एका भाषेतील एक विशिष्ट फाईल निर्धारित करा.'
 arguments:
-    language: 'Language to determine pending translations against English'
-    library: 'Library to determine pending translations against English i.e console-yaml'
+    language: 'इंग्रजी विरुद्ध प्रलंबित अनुवाद निर्धारित करण्यासाठी भाषा.'
+    library: 'इंग्रजी विरुद्ध प्रलंबित अनुवाद निर्धारित करण्यासाठी लायब्ररी i.e console-yaml'
 options:
-    file: 'Specific file to determine pending translations against English'
+    file: 'इंग्रजी विरुद्ध प्रलंबित अनुवाद निर्धारित करण्यासाठी विशिष्ट फाइल.'
 messages:
-    invalid-language: 'Language "%s" is invalid'
-    language: Language
-    pending-translations: 'Pending translation to "%s" at file "%s"'
-    missing-file: 'Language "%s" doens''t have file "%s", try executing translation:sync command'
-    success-language: 'There are "%s" pending traslations for "%s"'
-    success-language-file: 'There are "%s" pending traslations for "%s" at file "%s"'
-    key: 'YAML Key'
-    value: 'YAML Value'
+    invalid-language: 'भाषा "%s" अवैध आहे.'
+    language: भाषा
+    pending-translations: 'फाईल "%s" वर "%s" मध्ये प्रलंबित अनुवाद.'
+    missing-file: 'भाषा "%s" कडे फाइल "%s" नाही, अनुवाद कार्यान्वित करण्याचा प्रयत्न करा translation:sync आदेश'
+    success-language: '"%s" साठी "%s" प्रलंबित अनुवाद आहे.'
+    success-language-file: '"%s" साठी "%s" प्रलंबित अनुवाद आहेत "%s" या फाइलमध्ये.'
+    key: 'YAML की'
+    value: 'YAML मूल्य'
 examples:
     -
-        description: 'Determine pending translation strings in all languages.'
+        description: 'सर्व भाषांमध्ये प्रलंबित अनुवाद स्ट्रिंग ठरवा.'
         execution: 'drupal translation:pending'
     -
-        description: 'Determine pending translation strings in Spanish language'
+        description: 'स्पॅनिश भाषेत प्रलंबित अनुवाद स्ट्रिंग ठरवा.'
         execution: 'drupal translation:pending es'
     -
-        description: 'Determine pending translation strings in all languages in console-develop library'
+        description: 'console-develop लायब्ररीमधील सर्व भाषांमध्ये प्रलंबित अनुवाद स्ट्रिंग ठरवा.'
         execution: 'drupal translation:pending all console-develop'
     -
-        description: 'Determine pending translation strings in Spanish language in console-develop library'
+        description: 'console-develop लायब्ररीमध्ये स्पॅनिश भाषेमध्ये प्रलंबित अनुवाद स्ट्रिंग ठरवा.'
         execution: 'drupal translation:pending es console-develop'

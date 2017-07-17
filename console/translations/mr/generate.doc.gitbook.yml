@@ -1,17 +1,17 @@
-description: 'Generate documentations for Commands'
+description: 'कमांडसाठी डॉक्युमेंटेशन उत्पन्न करा.'
 options:
-    path: 'The path to render the documentation'
+    path: 'दस्तऐवज रेंडर करण्यासाठी मार्ग.'
 messages:
-    missing_path: 'The path is missing'
-    title: 'Available Drupal Console Commands'
-    note: Note
-    note-description: 'Drupal Console commands *must* be run from the root of a Drupal 8 installation'
-    command: 'Drupal Console Command'
-    command_description: 'The **"%s"** command "%s"'
-    usage: Usage
-    options: 'Available options'
-    option: Option
-    details: Details
-    arguments: 'Available arguments'
-    argument: Argument
-    examples: Examples
+    missing_path: 'पथ गहाळ आहे.'
+    title: 'उपलब्ध Drupal Console आदेश.'
+    note: टीप
+    note-description: 'Drupal Console आदेश एखाद्या Drupal 8 इन्स्टॉलेशनच्या रूटपासून चालवा.'
+    command: 'Drupal Console आदेश'
+    command_description: '**"%s"** आदेश "%s"'
+    usage: वापर
+    options: 'उपलब्ध पर्याय'
+    option: पर्याय
+    details: तपशील
+    arguments: 'उपलब्ध वितर्क'
+    argument: वितर्क
+    examples: उदाहरणे

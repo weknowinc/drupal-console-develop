@@ -1,22 +1,22 @@
-description: 'Clean up translation files'
+description: 'अनुवाद फायली साफ करा.'
 arguments:
-    language: 'Language to clean up files against English'
-    library: 'Library to clean up files against English i.e console-yaml'
+    language: 'इंग्रजी विरुद्ध फायली साफ करण्यासाठी भाषा.'
+    library: 'इंग्रजी विरुद्ध फाईल्स साफ करण्यासाठी लायब्ररी i.e console-yaml'
 messages:
-    invalid-language: 'Language "%s" is invalid'
-    language: Language
-    file-deleted: 'File "%s" was deleted from "%s" because it is no longer required.'
-    success: 'Unnecessary files were removed'
+    invalid-language: 'भाषा "%s" अवैध आहे.'
+    language: भाषा
+    file-deleted: '"%s" फाइल "%s" वरून हटविण्यात आली कारण त्यापुढे आवश्यक नाही.'
+    success: 'अनावश्यक फायली काढून टाकल्या होत्या.'
 examples:
     -
-        description: 'Delete all unnecessary files in all languages.'
+        description: 'सर्व भाषांमध्ये सर्व अनावश्यक फाइल्स हटवा.'
         execution: 'drupal translation:cleanup'
     -
-        description: 'Delete all unnecessary files in Spanish language'
+        description: 'स्पॅनिश भाषेतील सर्व अनावश्यक फाइल्स हटवा.'
         execution: 'drupal translation:cleanup es'
     -
-        description: 'Delete all unnecessary files in all languages in console-develop library'
+        description: 'सर्व भाषांमध्ये console-develop लायब्ररीमधील सर्व अनावश्यक फाइल्स हटवा.'
         execution: 'drupal translation:cleanup all console-develop'
     -
-        description: 'Delete all unnecessary files in Spanish language in console-develop library'
+        description: 'console-develop लायब्ररीमधील स्पॅनिश भाषेतील सर्व अनावश्यक फाइल्स हटवा.'
         execution: 'drupal translation:cleanup es console-develop'

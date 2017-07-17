@@ -1,18 +1,18 @@
-description: 'Generate a printable cheatsheet for Commands'
+description: 'आदेशांकरिता मुद्रणयोग्य चीटशीट उत्पन्न करा.'
 options:
-    path: 'The path to generate the pdf for the documentation'
-    wkhtmltopdf: 'The path for the wkhtmltopdf binary in your system'
+    path: 'दस्तऐवजीकरणासाठी पीडीएफ निर्माण करण्याचा मार्ग.'
+    wkhtmltopdf: 'आपल्या सिस्टममधील wkhtmltopdf बायनरीसाठी मार्ग.'
 messages:
-    missing_path: 'The path is missing'
-    title: 'Drupal Console Cheatsheet'
-    note: Note
-    note-description: 'Drupal Console commands *must* be run from the root of a Drupal 8 installation'
-    command: 'Drupal Console Command'
-    command_description: 'The **"%s"** command "%s"'
-    usage: Usage
-    options: 'Available options'
-    option: Option
-    details: Details
-    arguments: 'Available arguments'
-    argument: Argument
-    examples: Examples
+    missing_path: 'पथ गहाळ आहे.'
+    title: 'Drupal कन्सोल Cheatsheet.'
+    note: टीप
+    note-description: 'Drupal Console आदेश एखाद्या Drupal 8 इन्स्टॉलेशनच्या रूटपासून चालवा.'
+    command: 'Drupal Console आदेश'
+    command_description: '** "%s" ** आदेश "%s"'
+    usage: वापर
+    options: 'उपलब्ध पर्याय'
+    option: पर्याय
+    details: तपशील
+    arguments: 'उपलब्ध वितर्क'
+    argument: वितर्क
+    examples: उदाहरणे
