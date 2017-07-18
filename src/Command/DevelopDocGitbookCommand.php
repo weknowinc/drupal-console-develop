@@ -2,7 +2,7 @@
 
 /**
  * @file
- * Contains \Drupal\Console\Develop\Command\GenerateDocGitbookCommand.
+ * Contains \Drupal\Console\Develop\Command\DevelopDocGitbookCommand.
  */
 
 namespace Drupal\Console\Develop\Command;
@@ -17,7 +17,7 @@ use Drupal\Console\Core\Utils\TwigRenderer;
 use Drupal\Console\Annotations\DrupalCommand;
 
 /**
- * Class GenerateDocGitbookCommand.
+ * Class DevelopDocGitbookCommand.
  *
  * @DrupalCommand (
  *     extension="drupal/console-develop",
@@ -25,7 +25,7 @@ use Drupal\Console\Annotations\DrupalCommand;
  * )
  */
 
-class GenerateDocGitbookCommand extends Command
+class DevelopDocGitbookCommand extends Command
 {
     use CommandTrait;
     /**
@@ -34,7 +34,7 @@ class GenerateDocGitbookCommand extends Command
     protected $renderer;
 
     /**
-     * GenerateDocGitbookCommand constructor.
+     * DevelopDocGitbookCommand constructor.
      *
      * @param TwigRenderer $renderer
      */
@@ -51,13 +51,13 @@ class GenerateDocGitbookCommand extends Command
     protected function configure()
     {
         $this
-            ->setName('generate:doc:gitbook')
-            ->setDescription($this->trans('commands.generate.doc.gitbook.description'))
+            ->setName('develop:doc:gitbook')
+            ->setDescription($this->trans('commands.develop.doc.gitbook.description'))
             ->addOption(
                 'path',
                 null,
                 InputOption::VALUE_OPTIONAL,
-                $this->trans('commands.generate.doc.gitbook.options.path')
+                $this->trans('commands.develop.doc.gitbook.options.path')
             )
             ->setAliases(['gdg']);
         ;
@@ -77,7 +77,7 @@ class GenerateDocGitbookCommand extends Command
 
         if (!$path) {
             $io->error(
-                $this->trans('commands.generate.doc.gitbook.messages.missing_path')
+                $this->trans('commands.develop.doc.gitbook.messages.missing_path')
             );
 
             return 1;

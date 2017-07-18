@@ -8,40 +8,40 @@ services:
     tags:
       - { name: drupal.command }
   console.develop_generate_doc_cheatsheet_command:
-    class: \Drupal\Console\Develop\Command\GenerateDocCheatsheetCommand
+    class: \Drupal\Console\Develop\Command\DevelopDocCheatsheetCommand
     tags:
       - { name: drupal.command }
   console.develop_generate_doc_dash_command:
-    class: \Drupal\Console\Develop\Command\GenerateDocDashCommand
+    class: \Drupal\Console\Develop\Command\DevelopDocDashCommand
     arguments: ['@console.renderer', '@console.root']
     tags:
       - { name: drupal.command }
   console.develop_denerate_doc_data_command:
-    class: \Drupal\Console\Develop\Command\GenerateDocDataCommand
+    class: \Drupal\Console\Develop\Command\DevelopDocDataCommand
     tags:
       - { name: drupal.command }
   console.develop_generate_doc_gitbook_command:
-    class: \Drupal\Console\Develop\Command\GenerateDocGitbookCommand
+    class: \Drupal\Console\Develop\Command\DevelopDocGitbookCommand
     arguments: ['@console.renderer']
     tags:
       - { name: drupal.command }
   console.develop_translation_cleanup_command:
-    class: \Drupal\Console\Develop\Command\TranslationCleanupCommand
+    class: \Drupal\Console\Develop\Command\DevelopTranslationCleanupCommand
     arguments: ['@console.root', '@console.configuration_manager']
     tags:
       - { name: drupal.command }
   console.develop_translation_pending_command:
-    class: \Drupal\Console\Develop\Command\TranslationPendingCommand
+    class: \Drupal\Console\Develop\Command\DevelopTranslationPendingCommand
     arguments: ['@console.root', '@console.configuration_manager', '@console.nested_array']
     tags:
       - { name: drupal.command }
   console.develop_translation_stats_command:
-    class: \Drupal\Console\Develop\Command\TranslationStatsCommand
+    class: \Drupal\Console\Develop\Command\DevelopTranslationStatsCommand
     arguments: ['@console.root', '@console.configuration_manager', '@console.renderer', '@console.nested_array']
     tags:
       - { name: drupal.command }
   console.develop_translation_sync_command:
-    class: \Drupal\Console\Develop\Command\TranslationSyncCommand
+    class: \Drupal\Console\Develop\Command\DevelopTranslationSyncCommand
     arguments: ['@console.root', '@console.configuration_manager']
     tags:
       - { name: drupal.command }

@@ -2,7 +2,7 @@
 
 /**
  * @file
- * Contains \Drupal\Console\Develop\Command\TranslationCleanupCommand.
+ * Contains \Drupal\Console\Develop\Command\DevelopTranslationCleanupCommand.
  */
 
 namespace Drupal\Console\Develop\Command;
@@ -21,7 +21,7 @@ use Drupal\Console\Annotations\DrupalCommand;
 use Drupal\views\Views;
 
 /**
- * Class TranslationCleanupCommand.
+ * Class DevelopTranslationCleanupCommand.
  *
  * @DrupalCommand (
  *     extension="drupal/console-develop",
@@ -29,7 +29,7 @@ use Drupal\views\Views;
  * )
  */
 
-class TranslationCleanupCommand extends Command
+class DevelopTranslationCleanupCommand extends Command
 {
     use CommandTrait;
 
@@ -65,18 +65,18 @@ class TranslationCleanupCommand extends Command
     protected function configure()
     {
         $this
-            ->setName('translation:cleanup')
-            ->setDescription($this->trans('commands.translation.cleanup.description'))
+            ->setName('develop:translation:cleanup')
+            ->setDescription($this->trans('commands.develop.translation.cleanup.description'))
             ->addArgument(
                 'language',
                 InputArgument::OPTIONAL,
-                $this->trans('commands.translation.cleanup.arguments.language'),
+                $this->trans('commands.develop.translation.cleanup.arguments.language'),
                 null
             )
             ->addArgument(
                 'library',
                 InputArgument::OPTIONAL,
-                $this->trans('commands.translation.cleanup.arguments.library'),
+                $this->trans('commands.develop.translation.cleanup.arguments.library'),
                 null
             )
             ->setAliases(['tc']);
@@ -99,7 +99,7 @@ class TranslationCleanupCommand extends Command
         if ($language && $language != 'all' && !isset($languages[$language])) {
             $io->error(
                 sprintf(
-                    $this->trans('commands.translation.cleanup.messages.invalid-language'),
+                    $this->trans('commands.develop.translation.cleanup.messages.invalid-language'),
                     $language
                 )
             );
@@ -113,7 +113,7 @@ class TranslationCleanupCommand extends Command
         $this->cleanupTranslations($io, $language, $library, $languages);
 
         $io->success(
-            $this->trans('commands.translation.cleanup.messages.success')
+            $this->trans('commands.develop.translation.cleanup.messages.success')
         );
     }
 
@@ -158,7 +158,7 @@ class TranslationCleanupCommand extends Command
                     if (!file_exists($englishDirectory . DIRECTORY_SEPARATOR .  $filename . '.yml')) {
                         $io->info(
                             sprintf(
-                                $this->trans('commands.translation.cleanup.messages.file-deleted'),
+                                $this->trans('commands.develop.translation.cleanup.messages.file-deleted'),
                                 $filename,
                                 $languageName
                             )

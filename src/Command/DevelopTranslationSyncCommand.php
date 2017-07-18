@@ -2,7 +2,7 @@
 
 /**
  * @file
- * Contains \Drupal\Console\Develop\Command\TranslationSyncCommand.
+ * Contains \Drupal\Console\Develop\Command\DevelopTranslationSyncCommand.
  */
 
 namespace Drupal\Console\Develop\Command;
@@ -21,7 +21,7 @@ use Drupal\Console\Core\Utils\ConfigurationManager;
 use Drupal\Console\Annotations\DrupalCommand;
 
 /**
- * Class TranslationSyncCommand.
+ * Class DevelopTranslationSyncCommand.
  *
  * @DrupalCommand (
  *     extension="drupal/console-develop",
@@ -29,7 +29,7 @@ use Drupal\Console\Annotations\DrupalCommand;
  * )
  */
 
-class TranslationSyncCommand extends Command
+class DevelopTranslationSyncCommand extends Command
 {
     use CommandTrait;
 
@@ -44,7 +44,7 @@ class TranslationSyncCommand extends Command
     protected $configurationManager;
 
     /**
-     * TranslationSyncCommand constructor.
+     * DevelopTranslationSyncCommand constructor.
      *
      * @param $consoleRoot
      * @param configurationManager $configurationManager
@@ -64,25 +64,25 @@ class TranslationSyncCommand extends Command
     protected function configure()
     {
         $this
-            ->setName('translation:sync')
-            ->setDescription($this->trans('commands.translation.sync.description'))
+            ->setName('develop:translation:sync')
+            ->setDescription($this->trans('commands.develop.translation.sync.description'))
             ->addArgument(
                 'language',
                 InputArgument::OPTIONAL,
-                $this->trans('commands.translation.sync.arguments.language'),
+                $this->trans('commands.develop.translation.sync.arguments.language'),
                 null
             )
             ->addArgument(
                 'library',
                 InputArgument::OPTIONAL,
-                $this->trans('commands.translation.sync.arguments.library'),
+                $this->trans('commands.develop.translation.sync.arguments.library'),
                 null
             )
             ->addOption(
                 'file',
                 null,
                 InputOption::VALUE_OPTIONAL,
-                $this->trans('commands.translation.stats.options.file'),
+                $this->trans('commands.develop.translation.stats.options.file'),
                 null
             )
             ->setAliases(['tsy']);
@@ -104,7 +104,7 @@ class TranslationSyncCommand extends Command
         if ($language && $language != 'all' && !isset($languages[$language])) {
             $io->error(
                 sprintf(
-                    $this->trans('commands.translation.stats.messages.invalid-language'),
+                    $this->trans('commands.develop.translation.stats.messages.invalid-language'),
                     $language
                 )
             );
@@ -117,7 +117,7 @@ class TranslationSyncCommand extends Command
 
         $this->syncTranslations($io, $language, $library, $languages, $file);
 
-        $io->success($this->trans('commands.translation.sync.messages.sync-finished'));
+        $io->success($this->trans('commands.develop.translation.sync.messages.sync-finished'));
     }
 
     protected function syncTranslations($io, $language = null, $library = null, $languages, $file)
@@ -183,7 +183,7 @@ class TranslationSyncCommand extends Command
                 if(!is_dir($languageDir)) {
                     $io->info(
                         sprintf(
-                            $this->trans('commands.translation.sync.messages.missing-language'),
+                            $this->trans('commands.develop.translation.sync.messages.missing-language'),
                             $languages[$langCode]
                         )
                     );
@@ -201,7 +201,7 @@ class TranslationSyncCommand extends Command
                     file_put_contents($resourceTranslated, $englishFile);
                     $io->info(
                         sprintf(
-                            $this->trans('commands.translation.sync.messages.created-file'),
+                            $this->trans('commands.develop.translation.sync.messages.created-file'),
                             $file->getBasename(),
                             $languageName
                         )
@@ -230,7 +230,7 @@ class TranslationSyncCommand extends Command
                 } catch (\Exception $e) {
                     $io->error(
                         sprintf(
-                            $this->trans('commands.translation.sync.messages.error-generating'),
+                            $this->trans('commands.develop.translation.sync.messages.error-generating'),
                             $resourceTranslated,
                             $languageName,
                             $e->getMessage()
@@ -246,7 +246,7 @@ class TranslationSyncCommand extends Command
                     $io->error(
                         sprintf(
                             '%s: %s',
-                            $this->trans('commands.translation.sync.messages.error-writing'),
+                            $this->trans('commands.develop.translation.sync.messages.error-writing'),
                             $resourceTranslated,
                             $languageName,
                             $e->getMessage()

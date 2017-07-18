@@ -2,7 +2,7 @@
 
 /**
  * @file
- * Contains \Drupal\Console\Develop\Command\TranslationStatsCommand.
+ * Contains \Drupal\Console\Develop\Command\DevelopTranslationPendingCommand.
  */
 
 namespace Drupal\Console\Develop\Command;
@@ -12,20 +12,18 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Input\InputArgument;
+use Symfony\Component\Yaml\Exception\ParseException;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Yaml\Parser;
-use Symfony\Component\Yaml\Exception\ParseException;
 use Symfony\Component\Console\Command\Command;
 use Drupal\Console\Core\Style\DrupalStyle;
 use Drupal\Console\Core\Command\Shared\CommandTrait;
 use Drupal\Console\Core\Utils\ConfigurationManager;
-use Drupal\Console\Core\Utils\TwigRenderer;
 use Drupal\Console\Core\Utils\NestedArray;
 use Drupal\Console\Annotations\DrupalCommand;
-use Drupal\Console\Core\Generator\Generator;
 
 /**
- * Class TranslationStatsCommand.
+ * Class DevelopTranslationPendingCommand.
  *
  * @DrupalCommand (
  *     extension="drupal/console-develop",
@@ -33,7 +31,7 @@ use Drupal\Console\Core\Generator\Generator;
  * )
  */
 
-class TranslationStatsCommand extends Command
+class DevelopTranslationPendingCommand extends Command
 {
     use TranslationTrait;
     use CommandTrait;
@@ -49,11 +47,6 @@ class TranslationStatsCommand extends Command
     protected $configurationManager;
 
     /**
-     * @var TwigRenderer $renderer
-     */
-    protected $renderer;
-
-    /**
       * @var NestedArray
       */
     protected $nestedArray;
@@ -63,56 +56,54 @@ class TranslationStatsCommand extends Command
      */
     protected $excludeTranslations = ['messages.console'];
 
+
     /**
-     * TranslationStatsCommand constructor.
+     * DevelopTranslationPendingCommand constructor.
      *
-     * @param $appRoot
-     * @param ConfigurationManager $configurationManager
-     * @param TwigRenderer         $renderer
+     * @param $consoleRoot
+     * @param $configurationManager
      * @param NestedArray          $nestedArray
      */
     public function __construct(
         $consoleRoot,
         ConfigurationManager $configurationManager,
-        TwigRenderer $renderer,
         NestedArray $nestedArray
     ) {
         $this->consoleRoot = $consoleRoot;
         $this->configurationManager = $configurationManager;
-        $this->renderer = $renderer;
         $this->nestedArray = $nestedArray;
         parent::__construct();
     }
 
+
     /**
      * {@inheritdoc}
      */
-
     protected function configure()
     {
         $this
-            ->setName('translation:stats')
-            ->setDescription($this->trans('commands.translation.stats.description'))
+            ->setName('develop:translation:pending')
+            ->setDescription($this->trans('commands.develop.translation.pending.description'))
             ->addArgument(
                 'language',
-                InputArgument::OPTIONAL,
-                $this->trans('commands.translation.stats.arguments.language'),
+                InputArgument::REQUIRED,
+                $this->trans('commands.develop.translation.pending.arguments.language'),
                 null
             )
             ->addArgument(
                 'library',
                 InputArgument::OPTIONAL,
-                $this->trans('commands.translation.stats.arguments.library'),
+                $this->trans('commands.develop.translation.pending.arguments.library'),
                 null
             )
             ->addOption(
-                'format',
+                'file',
                 null,
                 InputOption::VALUE_OPTIONAL,
-                $this->trans('commands.translation.stats.options.format'),
-                'table'
+                $this->trans('commands.develop.translation.pending.options.file'),
+                null
             )
-            ->setAliases(['ts']);
+            ->setAliases(['tp']);
     }
 
     /**
@@ -124,7 +115,7 @@ class TranslationStatsCommand extends Command
 
         $language = $input->getArgument('language');
         $library = $input->getArgument('library');
-        $format = $input->getOption('format');
+        $file = $input->getOption('file');
 
         $languages = $this->configurationManager->getConfiguration()->get('application.languages');
         unset($languages['en']);
@@ -132,7 +123,7 @@ class TranslationStatsCommand extends Command
         if ($language && $language != 'all' && !isset($languages[$language])) {
             $io->error(
                 sprintf(
-                    $this->trans('commands.translation.stats.messages.invalid-language'),
+                    $this->trans('commands.develop.translation.pending.messages.invalid-language'),
                     $language
                 )
             );
@@ -143,37 +134,29 @@ class TranslationStatsCommand extends Command
             $languages = [$language => $languages[$language]];
         }
 
-        $stats = $this->calculateStats($io, $language, $library, $languages);
+        $pendingTranslations = $this->determinePendingTranslation($io, $language, $library, $languages, $file);
 
-        if ($format == 'table') {
-            $tableHeaders = [
-                $this->trans('commands.translation.stats.messages.language'),
-                $this->trans('commands.translation.stats.messages.percentage'),
-                $this->trans('commands.translation.stats.messages.iso')
-            ];
-
-            $io->table($tableHeaders, $stats);
-            return 0;
-        }
-
-        if ($format == 'markdown') {
-            $arguments['language'] = $this->trans('commands.translation.stats.messages.language');
-            $arguments['percentage'] = $this->trans('commands.translation.stats.messages.percentage');
-
-            $arguments['languages'] = $stats;
-
-            $this->renderer->addSkeletonDir(__DIR__ . '/../../templates');
-
-            $io->writeln(
-                $this->renderer->render(
-                    'core/translation/stats.md.twig',
-                    $arguments
+        if ($file) {
+            $io->success(
+                sprintf(
+                    $this->trans('commands.develop.translation.pending.messages.success-language-file'),
+                    $pendingTranslations,
+                    $languages[$language],
+                    $file
+                )
+            );
+        } else {
+            $io->success(
+                sprintf(
+                    $this->trans('commands.develop.translation.pending.messages.success-language'),
+                    $pendingTranslations,
+                    $languages[$language]
                 )
             );
         }
     }
 
-    protected function calculateStats($io, $language = null, $library = null, $languages)
+    protected function determinePendingTranslation($io, $language = null, $library = null, $languages, $fileFilter)
     {
         $englishFilesFinder = new Finder();
         $yaml = new Parser();
@@ -196,9 +179,15 @@ class TranslationStatsCommand extends Command
 
         $englishFiles = $englishFilesFinder->files()->name('*.yml')->in($englishDirectory);
 
+        $pendingTranslations = 0;
         foreach ($englishFiles as $file) {
             $resource = $englishDirectory . '/' . $file->getBasename();
             $filename = $file->getBasename('.yml');
+
+            if ($fileFilter && $fileFilter != $file->getBasename()) {
+                continue;
+            }
+
             try {
                 $englishFileParsed = $yaml->parse(file_get_contents($resource));
             } catch (ParseException $e) {
@@ -221,24 +210,20 @@ class TranslationStatsCommand extends Command
                             $langCode
                         );
                 }
-                                //don't show that language if that repo isn't present
-                if (!file_exists($languageDir)) {
-                    continue;
-                }
 
                 if (isset($language) && $langCode != $language && $language != 'all') {
                     continue;
                 }
 
-                if (!isset($statistics[$langCode])) {
-                    $statistics[$langCode] = ['total' => 0, 'equal'=> 0 , 'diff' => 0];
-                }
-
                 $resourceTranslated = $languageDir . '/' . $file->getBasename();
                 if (!file_exists($resourceTranslated)) {
-                    $englishFileEntries = count($englishFileParsed, COUNT_RECURSIVE);
-                    $statistics[$langCode]['total'] += $englishFileEntries;
-                    $statistics[$langCode]['equal'] += $englishFileEntries;
+                    $io->info(
+                        sprintf(
+                            $this->trans('commands.develop.translation.pending.messages.missing-file'),
+                            $languageName,
+                            $file->getBasename()
+                        )
+                    );
                     continue;
                 }
 
@@ -249,13 +234,21 @@ class TranslationStatsCommand extends Command
                 }
 
                 $diffStatistics = ['total' => 0, 'equal' => 0, 'diff' => 0];
+
+                // Calculate diff excluding examples execution
                 $diff = $this->nestedArray->arrayDiff($englishFileParsed, $resourceTranslatedParsed, true, $diffStatistics);
 
-                $yamlPending = 0;
                 if (!empty($diff)) {
                     $diffFlatten = [];
                     $keyFlatten = '';
                     $this->nestedArray->yamlFlattenArray($diff, $diffFlatten, $keyFlatten);
+
+                    $tableHeader = [
+                        $this->trans('commands.develop.translation.pending.messages.key'),
+                        $this->trans('commands.develop.translation.pending.messages.value'),
+                    ];
+
+                    $tableRows = [];
 
                     $diffFlatten = array_filter(
                         $diffFlatten,
@@ -263,32 +256,31 @@ class TranslationStatsCommand extends Command
                         ARRAY_FILTER_USE_BOTH
                     );
 
-                    $yamlPending = count($diffFlatten);
+                    foreach ($diffFlatten as $yamlKey => $yamlValue) {
+                        $tableRows[] = [
+                            $yamlKey,
+                            $yamlValue
+                        ];
+
+                    }
+
+                    if (count($diffFlatten)) {
+                        $io->writeln(
+                            sprintf(
+                                $this->trans('commands.develop.translation.pending.messages.pending-translations'),
+                                $languageName,
+                                $file->getBasename()
+                            )
+                        );
+
+                        $io->table($tableHeader, $tableRows, 'compact');
+                        $pendingTranslations+= count($diffFlatten);
+                    }
                 }
-
-                $statistics[$langCode]['total'] += $diffStatistics['total'];
-                $statistics[$langCode]['pending'] += $diffStatistics['pending'] + $yamlPending;
             }
         }
 
-        $stats = [];
-        foreach ($statistics as $langCode => $statistic) {
-            $index = isset($languages[$langCode])? $languages[$langCode]: $langCode;
-
-            $stats[] = [
-                'name' => $index,
-                'percentage' => round(100 - $statistic['pending']/$statistic['total']*100, 2),
-                'iso' => $langCode
-            ];
-        }
-
-        usort(
-            $stats, function ($a, $b) {
-                return $a["percentage"] <  $b["percentage"];
-            }
-        );
-
-        return $stats;
+        return $pendingTranslations;
     }
 
     public function validatePendingTranslation($value, $key) {

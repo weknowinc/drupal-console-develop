@@ -2,7 +2,7 @@
 
 /**
  * @file
- * Contains \Drupal\Console\Develop\Command\GenerateDocDataCommand.
+ * Contains \Drupal\Console\Develop\Command\DevelopDocDataCommand.
  */
 
 namespace Drupal\Console\Develop\Command;
@@ -16,7 +16,7 @@ use Drupal\Console\Core\Command\Shared\CommandTrait;
 use Drupal\Console\Annotations\DrupalCommand;
 
 /**
- * Class GenerateDocDataCommand.
+ * Class DevelopDocDataCommand.
  *
  * @DrupalCommand (
  *     extension="drupal/console-develop",
@@ -24,7 +24,7 @@ use Drupal\Console\Annotations\DrupalCommand;
  * )
  */
 
-class GenerateDocDataCommand extends Command
+class DevelopDocDataCommand extends Command
 {
     use CommandTrait;
 
@@ -35,15 +35,15 @@ class GenerateDocDataCommand extends Command
     protected function configure()
     {
         $this
-            ->setName('generate:doc:data')
+            ->setName('develop:doc:data')
             ->setDescription(
-                $this->trans('commands.generate.doc.data.description')
+                $this->trans('commands.develop.doc.data.description')
             )
             ->addOption(
                 'file',
                 null,
                 InputOption::VALUE_OPTIONAL,
-                $this->trans('commands.generate.doc.data.options.file')
+                $this->trans('commands.develop.doc.data.options.file')
             )
             ->setAliases(['gdda']);
         ;

@@ -2,7 +2,7 @@
 
 /**
  * @file
- * Contains \Drupal\Console\Develop\Command\GenerateDocDashCommand.
+ * Contains \Drupal\Console\Develop\Command\DevelopDocDashCommand.
  */
 
 namespace Drupal\Console\Develop\Command;
@@ -20,7 +20,7 @@ use Drupal\Console\Core\Utils\ConfigurationManager;
 use Drupal\Console\Annotations\DrupalCommand;
 
 /**
- * Class GenerateDocDashCommand.
+ * Class DevelopDocDashCommand.
  *
  * @DrupalCommand (
  *     extension="drupal/console-develop",
@@ -28,7 +28,7 @@ use Drupal\Console\Annotations\DrupalCommand;
  * )
  */
 
-class GenerateDocDashCommand extends Command
+class DevelopDocDashCommand extends Command
 {
     use CommandTrait;
 
@@ -80,7 +80,7 @@ PLIST;
     protected $configurationManager;
 
     /**
-     * GenerateDocDashCommand constructor.
+     * DevelopDocDashCommand constructor.
      *
      * @param $renderer
      * @param $consoleRoot
@@ -100,13 +100,13 @@ PLIST;
     protected function configure()
     {
         $this
-            ->setName('generate:doc:dash')
-            ->setDescription($this->trans('commands.generate.doc.dash.description'))
+            ->setName('develop:doc:dash')
+            ->setDescription($this->trans('commands.develop.doc.dash.description'))
             ->addOption(
                 'path',
                 null,
                 InputOption::VALUE_OPTIONAL,
-                $this->trans('commands.generate.doc.dash.options.path')
+                $this->trans('commands.develop.doc.dash.options.path')
             )
             ->setAliases(['gdd']);
         ;
@@ -126,7 +126,7 @@ PLIST;
 
         if (!$path) {
             $io->error(
-                $this->trans('commands.generate.doc.dash.messages.missing_path')
+                $this->trans('commands.develop.doc.dash.messages.missing_path')
             );
 
             return 1;

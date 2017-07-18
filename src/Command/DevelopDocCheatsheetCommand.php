@@ -19,7 +19,7 @@ use Drupal\Console\Core\Command\Shared\CommandTrait;
 use Drupal\Console\Annotations\DrupalCommand;
 
 /**
- * Class GenerateDocCheatsheetCommand.
+ * Class DevelopDocCheatsheetCommand.
  *
  * @DrupalCommand (
  *     extension="drupal/console-develop",
@@ -27,7 +27,7 @@ use Drupal\Console\Annotations\DrupalCommand;
  * )
  */
 
-class GenerateDocCheatsheetCommand extends Command
+class DevelopDocCheatsheetCommand extends Command
 {
     use CommandTrait;
 
@@ -69,7 +69,7 @@ class GenerateDocCheatsheetCommand extends Command
     private $wkhtmltopdfPath = "/usr/bin/wkhtmltopdf";
 
     /**
-     * GenerateDocCheatsheetCommand constructor.
+     * DevelopDocCheatsheetCommand constructor.
      */
     public function __construct()
     {
@@ -82,19 +82,19 @@ class GenerateDocCheatsheetCommand extends Command
     protected function configure()
     {
         $this
-            ->setName('generate:doc:cheatsheet')
-            ->setDescription($this->trans('commands.generate.doc.cheatsheet.description'))
+            ->setName('develop:doc:cheatsheet')
+            ->setDescription($this->trans('commands.develop.doc.cheatsheet.description'))
             ->addOption(
                 'path',
                 null,
                 InputOption::VALUE_OPTIONAL,
-                $this->trans('commands.generate.doc.cheatsheet.options.path')
+                $this->trans('commands.develop.doc.cheatsheet.options.path')
             )
             ->addOption(
                 'wkhtmltopdf',
                 null,
                 InputOption::VALUE_OPTIONAL,
-                $this->trans('commands.generate.doc.cheatsheet.options.wkhtmltopdf')
+                $this->trans('commands.develop.doc.cheatsheet.options.wkhtmltopdf')
             )
             ->setAliases(['gdc']);
         ;
@@ -115,7 +115,7 @@ class GenerateDocCheatsheetCommand extends Command
 
         if (!$path) {
             $io->error(
-                $this->trans('commands.generate.doc.gitbook.messages.missing_path')
+                $this->trans('commands.develop.doc.gitbook.messages.missing_path')
             );
 
             return 1;
