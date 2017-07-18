@@ -1,10 +1,10 @@
-description: 'Create symlinks between Drupal site and cloned repositories.'
+description: 'Drupal साइट आणि क्लोनिंग रेपॉजिटरीज दरम्यान सिमलिंक्स तयार करा.'
 options:
-    code-directory: 'The directory where the projects were cloned'
+    code-directory: 'प्रकल्प जिथे क्लोन होते तिथे निर्देशिका.'
 questions:
-    code-directory: 'Enter the directory where the projects were cloned'
+    code-directory: 'प्रकल्प कुठे क्लोन होते ते निर्देशिका प्रविष्ट करा.'
 messages:
-    info: "Make sure you forked and cloned drupal console repositories at the\n same parent directory and follow instructions at:\n https://docs.drupalconsole.com/en/contributing/new-features.html\n"
-    no-directory: 'A directory where the projects were cloned is required'
-    symlink: 'Creating symlinks between directories.'
-    copy: 'Autoload file "%s" copied as "%s".'
+    info: "आपण मूळ पालक निर्देशिकेवर डीप्ल कन्सोल रेपॉजिटरीज राखीव आणि क्लोन केल्याचे सुनिश्चित करा आणि येथे सूचनांचे अनुसरण करा :\n https://docs.drupalconsole.com/en/contributing/new-features.html\n"
+    no-directory: 'प्रकल्पांची क्लोनिंग झालेली अशी निर्देशिका आवश्यक आहे.'
+    symlink: 'डिरेक्टरीज अंतर्गत सिमुलेशन तयार करणे.'
+    copy: 'स्वयंलोड "%s" फाइल "%s" म्हणून कॉपी केली.'
