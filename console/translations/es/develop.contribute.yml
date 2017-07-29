@@ -1,8 +1,8 @@
-description: 'Create symlinks between Drupal site and cloned repositories.'
+description: 'Crea enlaces simbólicos entre el sitio Drupal y los repositorios clonados.'
 options:
-    code-directory: 'The path where the projects where cloned'
+    code-directory: 'La ruta donde están clonados los repositorios'
 questions:
-    code-directory: 'Enter the path where the projects where cloned'
+    code-directory: 'Introduzca la ruta donde están clonados los repositorios'
 messages:
-    symlink: 'Creating symlinks between directories.'
-    copy: 'Autoload file "%s" copied as "%s".'
+    symlink: 'Creando enlaces simbólicos entre directorios.'
+    copy: 'El archivo de autoload "%s" ha sido copiado como "%s".'

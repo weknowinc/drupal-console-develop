@@ -1,7 +1,7 @@
 description: 'Determina cadenas de traducción pendientes en un idioma o en un archivo específico de un idioma'
 arguments:
-    language: 'Language to determine pending translations against English'
-    library: 'Library to determine pending translations against English i.e console-yaml'
+    language: 'Idioma en el que localizar traducciones pendientes contra el inglés'
+    library: 'Librería en la que localizar traducciones pendientes contra el inglés, por ejemplo: console-yaml'
 options:
     file: 'Archivo específico con el que determinar las traducciones pendientes contra el inglés'
 messages:
@@ -11,18 +11,18 @@ messages:
     missing-file: 'El idioma "%s" no tiene el archivo "%s", intentando ejecutar el comando translation:sync'
     success-language: 'Hay "%s" traducciones pendientes de "%s" para "%s"'
     success-language-file: 'Hay "%s" traducciones pendientes de "%s" en el fichero "%s"'
-    key: 'YAML Key'
-    value: 'YAML Value'
+    key: 'Clave YAML'
+    value: 'Valor YAML'
 examples:
     -
-        description: 'Determine pending translation strings in all languages.'
+        description: 'Localiza cadenas pendientes de traducir en todos los idiomas.'
         execution: 'drupal translation:pending'
     -
-        description: 'Determine pending translation strings in Spanish language'
+        description: 'Localiza cadenas pendientes de traducir en español'
         execution: 'drupal translation:pending es'
     -
-        description: 'Determine pending translation strings in all languages in console-develop library'
+        description: 'Localiza cadenas pendientes de traducir en todos los idiomas dentro de la librería console-develop'
         execution: 'drupal translation:pending all console-develop'
     -
-        description: 'Determine pending translation strings in Spanish language in console-develop library'
+        description: 'Localiza cadenas pendientes de traducir en español dentro de la librería console-develop'
         execution: 'drupal translation:pending es console-develop'
