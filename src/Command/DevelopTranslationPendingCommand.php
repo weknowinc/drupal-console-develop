@@ -15,9 +15,8 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Yaml\Exception\ParseException;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Yaml\Parser;
-use Symfony\Component\Console\Command\Command;
+use Drupal\Console\Core\Command\Command;
 use Drupal\Console\Core\Style\DrupalStyle;
-use Drupal\Console\Core\Command\Shared\CommandTrait;
 use Drupal\Console\Core\Utils\ConfigurationManager;
 use Drupal\Console\Core\Utils\NestedArray;
 use Drupal\Console\Annotations\DrupalCommand;
@@ -34,7 +33,6 @@ use Drupal\Console\Annotations\DrupalCommand;
 class DevelopTranslationPendingCommand extends Command
 {
     use TranslationTrait;
-    use CommandTrait;
 
     /**
      * @var string
