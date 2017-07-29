@@ -1,7 +1,7 @@
-description: 'Genera un cheatsheet imprimible de los comandos disponibles'
+description: 'Genera un cheatsheet imprimible de los comandos disponibles. Es necesario el siguiente comando previamente: composer require knplabs/knp-snappy'
 options:
-    path: 'La ruta dónde generar el pdf'
-    wkhtmltopdf: 'La ruta donde reside el binario de wkhtmltopdf en su sistema'
+    path: 'La ruta absoluta dónde generar el pdf'
+    wkhtmltopdf: 'La ruta absoluta donde al binario de wkhtmltopdf en su sistema'
 messages:
     missing_path: 'No se encuentra la ruta.'
     title: 'Drupal Console Cheatsheet'
@@ -16,3 +16,6 @@ messages:
     arguments: 'Argumentos disponibles'
     argument: Argumento
     examples: Ejemplos
+        -
+            description: 'Generar el cheatsheet en el directorio /tmp indicando la ruta absoluta a wkhtmltopdf'
+            execution: 'drupal develop:doc:cheatsheet --path=/tmp  --wkhtmltopdf=/usr/local/bin/wkhtmltopdf'

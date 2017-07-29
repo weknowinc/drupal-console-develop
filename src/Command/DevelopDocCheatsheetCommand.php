@@ -128,39 +128,19 @@ class DevelopDocCheatsheetCommand extends Command
         $application = $this->getApplication();
         $command_list = [];
 
-        foreach ($this->singleCommands as $single_command) {
-            $command = $application->find($single_command);
-            $command_list['none'][] = [
-                'name' => $command->getName(),
-                'description' => $command->getDescription(),
-            ];
-        }
+        $applicationData = $application->getData();
+        $namespaces = $applicationData['application']['namespaces'];
 
-        $namespaces = $application->getNamespaces();
-        sort($namespaces);
-
-        $namespaces = array_filter(
-            $namespaces, function ($item) {
-                return (strpos($item, ':')<=0);
-            }
-        );
 
         foreach ($namespaces as $namespace) {
-            $commands = $application->all($namespace);
+            foreach ($applicationData['commands'][$namespace] as $command) {
 
-            usort(
-                $commands, function ($cmd1, $cmd2) {
-                    return strcmp($cmd1->getName(), $cmd2->getName());
-                }
-            );
-
-            foreach ($commands as $command) {
-                if ($command->getModule()=='Console') {
+                //if ($command->getModule()=='Console') {
                     $command_list[$namespace][] = [
-                        'name' => $command->getName(),
-                        'description' => $command->getDescription(),
+                        'name' => $command['name'],
+                        'description' => $command['description'],
                     ];
-                }
+                //}
             }
         }
 
@@ -213,8 +193,8 @@ class DevelopDocCheatsheetCommand extends Command
         //@TODO: catch exception if binary path doesn't exist!
         $snappy->setBinary($this->wkhtmltopdfPath);
         $snappy->setOption('orientation', "Landscape");
-        $snappy->generateFromHtml($content, "/" .$path . 'dc-cheatsheet.pdf');
-        $io->success("cheatsheet generated at /" .$path ."/dc-cheatsheet.pdf");
+        $snappy->generateFromHtml($content, $path . '/dc-cheatsheet.pdf');
+        $io->success("cheatsheet generated at " .$path ."/dc-cheatsheet.pdf");
 
         // command execution ends here
     }
