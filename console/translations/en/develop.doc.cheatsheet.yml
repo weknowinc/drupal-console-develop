@@ -15,7 +15,7 @@ messages:
   details: 'Details'
   arguments: 'Available arguments'
   argument: 'Argument'
-  examples: 'Examples'
-      -
-          description: 'Generate the cheatsheet in the /tmp directory providing the absolute path to wkhtmltopdf'
-          execution: 'drupal develop:doc:cheatsheet --path=/tmp  --wkhtmltopdf=/usr/local/bin/wkhtmltopdf'
+  examples:
+  -
+      description: 'Generate the cheatsheet in the /tmp directory providing the absolute path to wkhtmltopdf'
+      execution: 'drupal develop:doc:cheatsheet --path=/tmp  --wkhtmltopdf=/usr/local/bin/wkhtmltopdf's
