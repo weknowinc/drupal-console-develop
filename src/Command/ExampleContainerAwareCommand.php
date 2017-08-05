@@ -48,38 +48,39 @@ class ExampleContainerAwareCommand extends ContainerAwareCommand
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        /* Register your command as a service
+        /**
+         *  By extending ContainerAwareCommand Class on your class for
+         *  the command (instead of the more basic Command),
+         *  you also have access to the service container.
          *
-         * Make sure you register your command class at
-         * config/services/namespace.yml file and add the `drupal.command` tag.
+         *  In other words, you can access to any configured Drupal
+         *  service using the provided `get` method.
          *
-         * develop_example_container_aware:
-         *   class: Drupal\Console\Command\Develop\ExampleContainerAwareCommand
-         *   tags:
-         *     - { name: drupal.command }
+         *  $this->get('entity_type.manager');
          *
-         * NOTE: Make the proper changes on the namespace and class
-         *       according your new command.
+         *  Register your command as a service
          *
-         * DrupalConsole extends the SymfonyStyle class to provide
-         * an standardized Output Formatting Style.
+         *  Make sure you register your command class at
+         *  config/services/namespace.yml file and add the `drupal.command` tag.
          *
-         * Drupal Console provides the DrupalStyle helper class:
+         *  develop_example_container_aware:
+         *    class: Drupal\Console\Command\Develop\ExampleContainerAwareCommand
+         *    tags:
+         *      - { name: drupal.command }
+         *
+         *  NOTE: Make the proper changes on the namespace and class
+         *        according your new command.
+         *
+         *  Drupal Console provides the DrupalStyle helper class.
+         *  The DrupalStyle extends the SymfonyStyle class to provide
+         *  an standardized Output Formatting Style.
+         *
          */
         $io = new DrupalStyle($input, $output);
         $io->simple('This text could be translatable by');
         $io->simple('adding a YAML file at "console/translations/LANGUAGE/command.name.yml"');
 
         /**
-         *  By using ContainerAwareCommandTrait on your class for the command
-         *  (instead of the more basic CommandTrait), you have access to
-         *  the service container.
-         *
-         *  In other words, you can access to any configured Drupal service
-         *  using the provided get method.
-         *
-         *  $this->get('entity_type.manager');
-         *
          *  Reading user input argument
          *  $input->getArgument('ARGUMENT_NAME');
          *

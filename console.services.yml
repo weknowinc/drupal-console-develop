@@ -16,7 +16,7 @@ services:
     arguments: ['@console.renderer', '@console.root']
     tags:
       - { name: drupal.command }
-  console.develop_denerate_doc_data_command:
+  console.develop_generate_doc_data_command:
     class: \Drupal\Console\Develop\Command\DevelopDocDataCommand
     tags:
       - { name: drupal.command }

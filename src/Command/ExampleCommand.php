@@ -48,7 +48,12 @@ class ExampleCommand extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        /* Register your command as a service
+        /**
+         * By extending the provided Base `Command` Class, your command
+         * will be able to take advantage of the multi-language feature
+         * provided by DrupalConsole.
+         *
+         * Register your command as a service
          *
          * Make sure you register your command class at
          * config/services/namespace.yml file and add the `drupal.command` tag.
@@ -62,11 +67,11 @@ class ExampleCommand extends Command
          * NOTE: Make the proper changes on the namespace and class
          *       according your new command.
          *
-         * DrupalConsole extends the SymfonyStyle class to provide
-         * an standardized Output Formatting Style.
-         *
-         * Drupal Console provides the DrupalStyle helper class:
+         *  Drupal Console provides the DrupalStyle helper class.
+         *  The DrupalStyle extends the SymfonyStyle class to provide
+         *  an standardized Output Formatting Style.
          */
+
         $io = new DrupalStyle($input, $output);
         $io->simple('This text could be translatable by');
         $io->simple('adding a YAML file at "config/translations/LANGUAGE/command.name.yml"');
