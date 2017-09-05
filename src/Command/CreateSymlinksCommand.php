@@ -24,7 +24,6 @@ use Symfony\Component\Filesystem\Filesystem;
  *     extensionType="library"
  * )
  */
-
 class CreateSymlinksCommand extends Command
 {
     /**
