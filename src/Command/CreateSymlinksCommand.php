@@ -162,8 +162,10 @@ class CreateSymlinksCommand extends Command
         $packageDirectory
     ) {
         $fileSystem = new Filesystem();
-        if ($fileSystem->exists([$projectDirectory, $packageDirectory])) {
-            $fileSystem->remove($packageDirectory);
+        if ($fileSystem->exists([$projectDirectory])) {
+            if ($fileSystem->exists([$packageDirectory])) {
+                $fileSystem->remove($packageDirectory);
+            }
             $fileSystem->symlink(
                 $projectDirectory,
                 $packageDirectory
