@@ -30,6 +30,9 @@ class DevelopDocGitbookCommand extends Command
      * @var TwigRenderer $renderer
      */
     protected $renderer;
+    protected $filterNamespaces;
+    protected $excludeNamespaces;
+    protected $excludeChainCommands;
 
     /**
      * DevelopDocGitbookCommand constructor.
@@ -39,6 +42,9 @@ class DevelopDocGitbookCommand extends Command
     public function __construct(TwigRenderer $renderer)
     {
         $this->renderer = $renderer;
+        $this->filterNamespaces = null;
+        $this->excludeNamespaces = ['develop', 'yaml'];
+        $this->excludeChainCommands = true;
         parent::__construct();
     }
 
@@ -84,8 +90,12 @@ class DevelopDocGitbookCommand extends Command
         $this->renderer->addSkeletonDir(__DIR__ . '/../../templates');
 
         $application = $this->getApplication();
-        $applicationData = $application->getData();
+
+        // Get data filtering, excluding and remove chain command based on preferences
+        $applicationData = $application->getData($this->filterNamespaces, $this->excludeNamespaces, $this->excludeChainCommands);
+
         $namespaces = $applicationData['application']['namespaces'];
+
         foreach ($namespaces as $namespace) {
             foreach ($applicationData['commands'][$namespace] as $command) {
                 $this->renderFile(
