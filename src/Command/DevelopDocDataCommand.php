@@ -57,7 +57,18 @@ class DevelopDocDataCommand extends Command
             $file = $input->getOption('file');
         }
 
-        $data = $this->getApplication()->getData();
+        $application = $this->getApplication();
+        $applicationData = $application->getData();
+        $namespaces = $applicationData['application']['namespaces'];
+
+        $data['language'] = $applicationData['default_language'];
+
+        foreach ($namespaces as $namespace) {
+            foreach ($applicationData['commands'][$namespace] as $command) {
+                $data['commands'][] = $command;
+            }
+        }
+
         if ($file) {
             file_put_contents($file, json_encode($data, JSON_PRETTY_PRINT));
 
