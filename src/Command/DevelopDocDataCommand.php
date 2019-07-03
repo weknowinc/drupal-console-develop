@@ -62,6 +62,7 @@ class DevelopDocDataCommand extends Command
         $namespaces = $applicationData['application']['namespaces'];
 
         $data['language'] = $applicationData['default_language'];
+        $data['type'] = 'commands';
 
         foreach ($namespaces as $namespace) {
             foreach ($applicationData['commands'][$namespace] as $command) {
