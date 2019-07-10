@@ -64,8 +64,27 @@ class DevelopDocDataCommand extends Command
         $data['language'] = $applicationData['default_language'];
         $data['type'] = 'commands';
 
+        $excludeNamespaces = ['misc', 'demo', 'version', 'develop'];
+        $excludeCommands = ['demo', 'version', 'develop'];
+
         foreach ($namespaces as $namespace) {
+            if(!in_array($namespace, $excludeNamespaces)){
+                $data['namespaces'][] = ['name' => $namespace];
+            }
+
+            if(in_array($namespace, $excludeCommands)) {
+                continue;
+            }
+
             foreach ($applicationData['commands'][$namespace] as $command) {
+                if(!empty($command['options'])){
+                    $command['options'] = array_values($command['options']);
+                }
+
+                if(!empty($command['arguments'])){
+                    $command['arguments'] = array_values($command['arguments']);
+                }
+
                 $data['commands'][] = $command;
             }
         }
