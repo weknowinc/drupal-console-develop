@@ -1,6 +1,7 @@
 {
     "name": "drupal/console-develop",
     "description": "Drupal Console Development commands",
+    "type": "drupal-console-library",
     "license": "GPL-2.0+",
     "authors": [
         {
